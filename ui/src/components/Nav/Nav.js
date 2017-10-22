@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from './App.css';
+import styles from './Nav.css';
 
-const Header = () => (
-  <div className={styles.header}>
-    <ul className={styles.nav}>
+const Nav = () => (
+  <div className={styles.Nav}>
+    <ul className={styles.NavContent}>
       <li><a href={window.location.host}>Home</a></li>
       <li><a href={window.location.host}>Profile</a></li>
       <li><a href={window.location.host}>Messages</a></li>
@@ -12,4 +12,4 @@ const Header = () => (
   </div>
 );
 
-export default Header;
+export default Nav;

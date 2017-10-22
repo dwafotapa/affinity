@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
-import Header from './Header';
+import Nav from './components/Nav';
+import Sidebar from './components/Sidebar';
+import Main from './components/Main';
 import logo from './logo.svg';
 import styles from './App.css';
 
 class App extends Component {
   render() {
     return (
-      <div className={styles.AppWrapper}>
-        <Header />
+      <div className={styles.App}>
+        <Nav />
+        <div className={styles.AppContent}>
+          <Sidebar />
+          <Main />
+        </div>
       </div>
     );
   }
