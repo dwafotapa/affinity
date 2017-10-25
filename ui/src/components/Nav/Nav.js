@@ -1,13 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Nav.css';
 
 const Nav = () => (
   <div className={styles.Nav}>
     <ul className={styles.NavContent}>
-      <li><a href={window.location.host}>Home</a></li>
-      <li><a href={window.location.host}>Profile</a></li>
-      <li><a href={window.location.host}>Messages</a></li>
-      <li><a href={window.location.host}>Matches</a></li>
+      <li><Link to="/">Home</Link></li>
+      <li><Link to="/profile">Profile</Link></li>
+      <li><Link to="/messages">Messages</Link></li>
+      <li><Link to="/matches">Matches</Link></li>
     </ul>
   </div>
 );
