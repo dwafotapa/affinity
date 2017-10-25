@@ -21,7 +21,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches with a photo', (done) => {
     chai.request(server)
-    .get('/api/matches?has-photo=true')
+    .get('/api/matches?hasPhoto=true')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -35,7 +35,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches in contact', (done) => {
     chai.request(server)
-    .get('/api/matches?has-exchanged=true')
+    .get('/api/matches?hasExchanged=true')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -49,7 +49,7 @@ describe('GET /api/matches', () => {
 
   it('should get all favourite matches', (done) => {
     chai.request(server)
-    .get('/api/matches?is-favourite=true')
+    .get('/api/matches?isFavourite=true')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -63,7 +63,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches with a compatibility score >= 0.75', (done) => {
     chai.request(server)
-    .get('/api/matches?compatibility-start=0.75')
+    .get('/api/matches?compatibilityStart=0.75')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -77,7 +77,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches with a compatibility score <= 0.5', (done) => {
     chai.request(server)
-    .get('/api/matches?compatibility-end=0.5')
+    .get('/api/matches?compatibilityEnd=0.5')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -91,7 +91,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches with a compatibility score between 0.5 and 0.75', (done) => {
     chai.request(server)
-    .get('/api/matches?compatibility-start=0.5&compatibility-end=0.75')
+    .get('/api/matches?compatibilityStart=0.5&compatibilityEnd=0.75')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -105,7 +105,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches who are older than 30', (done) => {
     chai.request(server)
-    .get('/api/matches?age-start=30')
+    .get('/api/matches?ageStart=30')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -119,7 +119,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches who are younger than 40', (done) => {
     chai.request(server)
-    .get('/api/matches?age-end=40')
+    .get('/api/matches?ageEnd=40')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -133,7 +133,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches who are in their 30s', (done) => {
     chai.request(server)
-    .get('/api/matches?age-start=30&age-end=39')
+    .get('/api/matches?ageStart=30&ageEnd=39')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -147,7 +147,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches who are taller than 170cm', (done) => {
     chai.request(server)
-    .get('/api/matches?height-start=170')
+    .get('/api/matches?heightStart=170')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -161,7 +161,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches who are smaller than 170cm', (done) => {
     chai.request(server)
-    .get('/api/matches?height-end=170')
+    .get('/api/matches?heightEnd=170')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -175,7 +175,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches who are between 160cm and 170cm', (done) => {
     chai.request(server)
-    .get('/api/matches?height-start=160&height-end=170')
+    .get('/api/matches?heightStart=160&heightEnd=170')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -189,7 +189,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches who are located further than 300km', (done) => {
     chai.request(server)
-    .get('/api/matches?distance-start=300')
+    .get('/api/matches?distanceStart=300')
     .end((err, res) => {
       const user = server.get('user');
       
@@ -206,7 +206,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches who are located within 30km', (done) => {
     chai.request(server)
-    .get('/api/matches?distance-end=30')
+    .get('/api/matches?distanceEnd=30')
     .end((err, res) => {
       const user = server.get('user');
 
@@ -223,7 +223,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches who are located within 30km and 100km', (done) => {
     chai.request(server)
-    .get('/api/matches?distance-start=30&distance-end=100')
+    .get('/api/matches?distanceStart=30&distanceEnd=100')
     .end((err, res) => {
       const user = server.get('user');
 
@@ -238,9 +238,9 @@ describe('GET /api/matches', () => {
     });
   });
 
-  it('should get a 404 json object if has-photo is neither true nor false', (done) => {
+  it('should get a 404 json object if hasPhoto is neither true nor false', (done) => {
     chai.request(server)
-    .get('/api/matches?has-photo=neithertruenorfalse')
+    .get('/api/matches?hasPhoto=neithertruenorfalse')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
@@ -253,9 +253,9 @@ describe('GET /api/matches', () => {
     });
   });
 
-  it('should get a 404 json object if has-exchanged is neither true nor false', (done) => {
+  it('should get a 404 json object if hasExchanged is neither true nor false', (done) => {
     chai.request(server)
-    .get('/api/matches?has-exchanged=neithertruenorfalse')
+    .get('/api/matches?hasExchanged=neithertruenorfalse')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
@@ -268,9 +268,9 @@ describe('GET /api/matches', () => {
     });
   });
 
-  it('should get a 404 json object if is-favourite is neither true nor false', (done) => {
+  it('should get a 404 json object if isFavourite is neither true nor false', (done) => {
     chai.request(server)
-    .get('/api/matches?is-favourite=neithertruenorfalse')
+    .get('/api/matches?isFavourite=neithertruenorfalse')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
@@ -283,9 +283,9 @@ describe('GET /api/matches', () => {
     });
   });
 
-  it('should get a 404 json object if compatibility-start is not a number', (done) => {
+  it('should get a 404 json object if compatibilityStart is not a number', (done) => {
     chai.request(server)
-    .get('/api/matches?compatibility-start=now')
+    .get('/api/matches?compatibilityStart=now')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
@@ -298,9 +298,9 @@ describe('GET /api/matches', () => {
     });
   });
 
-  it('should get a 404 json object if compatibility-start is a number out of range', (done) => {
+  it('should get a 404 json object if compatibilityStart is a number out of range', (done) => {
     chai.request(server)
-    .get('/api/matches?compatibility-start=5')
+    .get('/api/matches?compatibilityStart=5')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
@@ -313,9 +313,9 @@ describe('GET /api/matches', () => {
     });
   });
 
-  it('should get a 404 json object if compatibility-end is not a number', (done) => {
+  it('should get a 404 json object if compatibilityEnd is not a number', (done) => {
     chai.request(server)
-    .get('/api/matches?compatibility-end=tomorrow')
+    .get('/api/matches?compatibilityEnd=tomorrow')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
@@ -328,9 +328,9 @@ describe('GET /api/matches', () => {
     });
   });
 
-  it('should get a 404 json object if compatibility-end is a number out of range', (done) => {
+  it('should get a 404 json object if compatibilityEnd is a number out of range', (done) => {
     chai.request(server)
-    .get('/api/matches?compatibility-end=10')
+    .get('/api/matches?compatibilityEnd=10')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
@@ -343,9 +343,9 @@ describe('GET /api/matches', () => {
     });
   });
 
-  it('should get a 404 json object if age-start is not a number', (done) => {
+  it('should get a 404 json object if ageStart is not a number', (done) => {
     chai.request(server)
-    .get('/api/matches?age-start=yesterday')
+    .get('/api/matches?ageStart=yesterday')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
@@ -358,9 +358,9 @@ describe('GET /api/matches', () => {
     });
   });
 
-  it('should get a 404 json object if age-start is a number out of range', (done) => {
+  it('should get a 404 json object if ageStart is a number out of range', (done) => {
     chai.request(server)
-    .get('/api/matches?age-start=17')
+    .get('/api/matches?ageStart=17')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
@@ -373,9 +373,9 @@ describe('GET /api/matches', () => {
     });
   });
 
-  it('should get a 404 json object if age-end is not a number', (done) => {
+  it('should get a 404 json object if ageEnd is not a number', (done) => {
     chai.request(server)
-    .get('/api/matches?age-end=notanumber')
+    .get('/api/matches?ageEnd=notanumber')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
@@ -388,9 +388,9 @@ describe('GET /api/matches', () => {
     });
   });
 
-  it('should get a 404 json object if age-end is a number out of range', (done) => {
+  it('should get a 404 json object if ageEnd is a number out of range', (done) => {
     chai.request(server)
-    .get('/api/matches?age-end=100')
+    .get('/api/matches?ageEnd=100')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
@@ -403,9 +403,9 @@ describe('GET /api/matches', () => {
     });
   });
 
-  it('should get a 404 json object if height-start is not a number', (done) => {
+  it('should get a 404 json object if heightStart is not a number', (done) => {
     chai.request(server)
-    .get('/api/matches?height-start=stillnotanumber')
+    .get('/api/matches?heightStart=stillnotanumber')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
@@ -418,9 +418,9 @@ describe('GET /api/matches', () => {
     });
   });
 
-  it('should get a 404 json object if height-start is a number out of range', (done) => {
+  it('should get a 404 json object if heightStart is a number out of range', (done) => {
     chai.request(server)
-    .get('/api/matches?height-start=300')
+    .get('/api/matches?heightStart=300')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
@@ -433,9 +433,9 @@ describe('GET /api/matches', () => {
     });
   });
 
-  it('should get a 404 json object if height-end is not a number', (done) => {
+  it('should get a 404 json object if heightEnd is not a number', (done) => {
     chai.request(server)
-    .get('/api/matches?height-end=notanumber')
+    .get('/api/matches?heightEnd=notanumber')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
@@ -448,9 +448,9 @@ describe('GET /api/matches', () => {
     });
   });
 
-  it('should get a 404 json object if height-end is a number out of range', (done) => {
+  it('should get a 404 json object if heightEnd is a number out of range', (done) => {
     chai.request(server)
-    .get('/api/matches?height-end=112')
+    .get('/api/matches?heightEnd=112')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
@@ -463,9 +463,9 @@ describe('GET /api/matches', () => {
     });
   });
 
-  it('should get a 404 json object if distance-start is not a number', (done) => {
+  it('should get a 404 json object if distanceStart is not a number', (done) => {
     chai.request(server)
-    .get('/api/matches?distance-start=veryfar')
+    .get('/api/matches?distanceStart=veryfar')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
@@ -478,9 +478,9 @@ describe('GET /api/matches', () => {
     });
   });
 
-  it('should get a 404 json object if distance-end is not a number', (done) => {
+  it('should get a 404 json object if distanceEnd is not a number', (done) => {
     chai.request(server)
-    .get('/api/matches?distance-end=farfaraway')
+    .get('/api/matches?distanceEnd=farfaraway')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;

@@ -11,13 +11,13 @@ router.get('/', (req, res, next) => {
   next();
 });
 
-// handles the has-photo parameter
+// handles the hasPhoto parameter
 router.get('/', (req, res, next) => {
-  if (req.query['has-photo'] === undefined) {
+  if (req.query['hasPhoto'] === undefined) {
     return next();
   }
 
-  switch (req.query['has-photo']) {
+  switch (req.query['hasPhoto']) {
     case 'true':
       req.matches = req.matches.filter(match => match.main_photo !== undefined);
       break;
@@ -32,13 +32,13 @@ router.get('/', (req, res, next) => {
   next();
 });
 
-// handles the has-exchanged parameter
+// handles the hasExchanged parameter
 router.get('/', (req, res, next) => {
-  if (req.query['has-exchanged'] === undefined) {
+  if (req.query['hasExchanged'] === undefined) {
     return next();
   }
   
-  switch (req.query['has-exchanged']) {
+  switch (req.query['hasExchanged']) {
     case 'true':
       req.matches = req.matches.filter(match => match.contacts_exchanged !== undefined && match.contacts_exchanged > 0);
       break;
@@ -53,13 +53,13 @@ router.get('/', (req, res, next) => {
   next();
 });
 
-// handles the is-favourite parameter
+// handles the isFavourite parameter
 router.get('/', (req, res, next) => {
-  if (req.query['is-favourite'] === undefined) {
+  if (req.query['isFavourite'] === undefined) {
     return next();
   }
 
-  switch (req.query['is-favourite']) {
+  switch (req.query['isFavourite']) {
     case 'true':
       req.matches = req.matches.filter(match => match.favourite !== undefined && match.favourite);
     case 'false':
@@ -73,13 +73,13 @@ router.get('/', (req, res, next) => {
   next();
 });
 
-// handles the compatibility-start parameter
+// handles the compatibilityStart parameter
 router.get('/', (req, res, next) => {
-  if (req.query['compatibility-start'] === undefined) {
+  if (req.query['compatibilityStart'] === undefined) {
     return next();
   }
 
-  const compatibilityStart = Number(req.query['compatibility-start']);
+  const compatibilityStart = Number(req.query['compatibilityStart']);
   if (isNaN(compatibilityStart) || compatibilityStart.isOutOfRange(config.COMPATIBILITY_SCORE_LOWER_BOUND, config.COMPATIBILITY_SCORE_UPPER_BOUND)) {
     const err = new Error(config.ERR_MSG_COMPATIBILITY_START_FILTER);
     err.status = 400;
@@ -90,13 +90,13 @@ router.get('/', (req, res, next) => {
   next();
 });
 
-// handles the compatibility-end parameter
+// handles the compatibilityEnd parameter
 router.get('/', (req, res, next) => {
-  if (req.query['compatibility-end'] === undefined) {
+  if (req.query['compatibilityEnd'] === undefined) {
     return next();
   }
 
-  const compatibilityEnd = Number(req.query['compatibility-end']);
+  const compatibilityEnd = Number(req.query['compatibilityEnd']);
   if (isNaN(compatibilityEnd) || compatibilityEnd.isOutOfRange(config.COMPATIBILITY_SCORE_LOWER_BOUND, config.COMPATIBILITY_SCORE_UPPER_BOUND)) {
     const err = new Error(config.ERR_MSG_COMPATIBILITY_END_FILTER);
     err.status = 400;
@@ -107,13 +107,13 @@ router.get('/', (req, res, next) => {
   next();
 });
 
-// handles the age-start parameter
+// handles the ageStart parameter
 router.get('/', (req, res, next) => {
-  if (req.query['age-start'] === undefined) {
+  if (req.query['ageStart'] === undefined) {
     return next();
   }
 
-  const ageStart = Number(req.query['age-start']);
+  const ageStart = Number(req.query['ageStart']);
   if (isNaN(ageStart) || ageStart.isOutOfRange(config.AGE_LOWER_BOUND, config.AGE_UPPER_BOUND)) {
     const err = new Error(config.ERR_MSG_AGE_START_FILTER);
     err.status = 400;
@@ -124,13 +124,13 @@ router.get('/', (req, res, next) => {
   next();
 });
 
-// handles the age-end parameter
+// handles the ageEnd parameter
 router.get('/', (req, res, next) => {
-  if (req.query['age-end'] === undefined) {
+  if (req.query['ageEnd'] === undefined) {
     return next();
   }
 
-  const ageEnd = Number(req.query['age-end']);
+  const ageEnd = Number(req.query['ageEnd']);
   if (isNaN(ageEnd) || ageEnd.isOutOfRange(config.AGE_LOWER_BOUND, config.AGE_UPPER_BOUND)) {
     const err = new Error(config.ERR_MSG_AGE_END_FILTER);
     err.status = 400;
@@ -141,13 +141,13 @@ router.get('/', (req, res, next) => {
   next();
 });
 
-// handles the height-start parameter
+// handles the heightStart parameter
 router.get('/', (req, res, next) => {
-  if (req.query['height-start'] === undefined) {
+  if (req.query['heightStart'] === undefined) {
     return next();
   }
 
-  const heightStart = Number(req.query['height-start']);
+  const heightStart = Number(req.query['heightStart']);
   if (isNaN(heightStart) || heightStart.isOutOfRange(config.HEIGHT_LOWER_BOUND, config.HEIGHT_UPPER_BOUND)) {
     const err = new Error(config.ERR_MSG_HEIGHT_START_FILTER);
     err.status = 400;
@@ -158,13 +158,13 @@ router.get('/', (req, res, next) => {
   next();
 });
 
-// handles the height-end parameter
+// handles the heightEnd parameter
 router.get('/', (req, res, next) => {
-  if (req.query['height-end'] === undefined) {
+  if (req.query['heightEnd'] === undefined) {
     return next();
   }
 
-  const heightEnd = Number(req.query['height-end']);
+  const heightEnd = Number(req.query['heightEnd']);
   if (isNaN(heightEnd) || heightEnd.isOutOfRange(config.HEIGHT_LOWER_BOUND, config.HEIGHT_UPPER_BOUND)) {
     const err = new Error(config.ERR_MSG_HEIGHT_END_FILTER);
     err.status = 400;
@@ -175,13 +175,13 @@ router.get('/', (req, res, next) => {
   next();
 });
 
-// handles the distance-start parameter
+// handles the distanceStart parameter
 router.get('/', (req, res, next) => {
-  if (req.query['distance-start'] === undefined) {
+  if (req.query['distanceStart'] === undefined) {
     return next();
   }
 
-  const distanceStart = Number(req.query['distance-start']);
+  const distanceStart = Number(req.query['distanceStart']);
   if (isNaN(distanceStart)) {
     const err = new Error(config.ERR_MSG_DISTANCE_START_FILTER);
     err.status = 400;
@@ -196,13 +196,13 @@ router.get('/', (req, res, next) => {
   next();
 });
 
-// handles the distance-end parameter
+// handles the distanceEnd parameter
 router.get('/', (req, res, next) => {
-  if (req.query['distance-end'] === undefined) {
+  if (req.query['distanceEnd'] === undefined) {
     return next();
   }
 
-  const distanceEnd = Number(req.query['distance-end']);
+  const distanceEnd = Number(req.query['distanceEnd']);
   if (isNaN(distanceEnd)) {
     const err = new Error(config.ERR_MSG_DISTANCE_END_FILTER);
     err.status = 400;
