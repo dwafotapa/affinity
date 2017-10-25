@@ -2,19 +2,26 @@ import React from 'react';
 import styles from './Sidebar.css';
 
 const Sidebar = () => (
-  <div className={styles.Sidebar}>
-    <p>Filters</p>
-    <form action="/matches" method="get">
-      <p>
-        <input type="checkbox"/> Has photo
-      </p>
-      <p>
-        <input type="checkbox"/> In contact
-      </p>
-      <p>
-        <input type="checkbox"/> Favourite
-      </p>
-    </form>
+  <div className={styles.SidebarWrapper}>
+    <div className={styles.Sidebar}>
+      <div className={styles.SidebarHeading}>Filters</div>
+      <div className={styles.SidebarBody}>
+        <form action="/matches" method="get">
+          <div>
+            <input type="checkbox" name="has-photo"/>
+            <label for="has-photo">Has photo</label>
+          </div>
+          <div>          
+            <input type="checkbox" name="has-exchanged"/>
+            <label for="has-exchanged">In contact</label>
+          </div>
+          <div>
+            <input type="checkbox" name="is-favourite"/>
+            <label for="is-favourite">Favourite</label>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 );
 

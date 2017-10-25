@@ -1,19 +1,18 @@
-.MainWrapper {
-  flex: 5;
+.HomeWrapper {
   padding: 10px;
 
-  .Main {
+  .Home {
     border: 1px solid #ddd;
     border-radius: 5px;
 
-    .MainHeading {
+    .HomeHeading {
       background-color: #f5f5f5;
       border-bottom: 1px solid #ddd;
       padding: 10px;
     }
 
-    .MainBody {
-      padding: 10px;  
+    .HomeBody {
+      padding: 10px;
     }
   }
 }
