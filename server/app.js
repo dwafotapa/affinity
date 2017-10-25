@@ -10,6 +10,11 @@ const app = express();
 // logging middleware
 app.use(morgan('dev'));
 
+// CORS middleware
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+});
+
 // routing middleware
 app.use('/api', index);
 app.use('/api/matches', matches);
