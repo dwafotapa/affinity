@@ -1,7 +1,7 @@
-// import @
+@import 'globals.scss';
 
 .Nav {
-  background: rgba(20,93,127,.8);
+  background: $color-blue;
   height: 30px;
   padding: 20px;
   display: flex;
@@ -21,7 +21,7 @@
 
       &:hover {
         background: white;
-        color: rgba(20,93,127,.8);
+        color: $color-blue;
       }
     }
   }
