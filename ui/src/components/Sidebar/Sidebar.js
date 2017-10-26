@@ -1,23 +1,38 @@
 import React from 'react';
 import styles from './Sidebar.css';
 
-const Sidebar = () => (
+const Sidebar = (props) => (
   <div className={styles.SidebarWrapper}>
     <div className={styles.Sidebar}>
       <div className={styles.SidebarHeading}>Filters</div>
       <div className={styles.SidebarBody}>
-        <form action="/matches" method="get">
+        <form>
           <div>
-            <input type="checkbox" name="has-photo"/>
-            <label for="has-photo">Has photo</label>
+            <input
+              name="hasPhoto"
+              type="checkbox"
+              checked={props.filters.hasPhoto}
+              onChange={props.handleCheckboxFilterChange}
+            />
+            <label htmlFor="hasPhoto">Has photo</label>
           </div>
           <div>          
-            <input type="checkbox" name="has-exchanged"/>
-            <label for="has-exchanged">In contact</label>
+            <input
+              name="hasExchanged"
+              type="checkbox"
+              checked={props.filters.hasExchanged}
+              onChange={props.handleCheckboxFilterChange}
+            />
+            <label htmlFor="hasExchanged">In contact</label>
           </div>
           <div>
-            <input type="checkbox" name="is-favourite"/>
-            <label for="is-favourite">Favourite</label>
+            <input
+              name="isFavourite"
+              type="checkbox"
+              checked={props.filters.isFavourite}
+              onChange={props.handleCheckboxFilterChange}
+            />
+            <label htmlFor="isFavourite">Favourite</label>
           </div>
         </form>
       </div>
