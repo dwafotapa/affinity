@@ -3,7 +3,7 @@
 
   .MainWrapper {
     flex: 5;
-    padding: 10px;
+    padding: 10px 10px 10px 0;
   
     .Main {
       border: 1px solid #ddd;
@@ -16,7 +16,20 @@
       }
   
       .MainBody {
-        padding: 10px;  
+        padding: 10px;
+
+        .MatchWrapper {
+          display: flex;
+
+          img {
+            display: block;
+            margin: 0 10px 10px 0;
+          }
+        }
+
+        .MatchMainPhoto {
+          width: 300px;
+        }
       }
     }
   }

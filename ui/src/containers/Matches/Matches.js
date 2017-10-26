@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import qs from 'qs';
 import Sidebar from '../../components/Sidebar';
 import styles from './Matches.css';
 
@@ -73,10 +72,8 @@ class Matches extends Component {
     }
 
     return matches.map((match, index) => (
-      <div key={index}>
-        <div>
-          <img src={match.main_photo} alt={match.main_photo}/>
-        </div>
+      <div key={index} className={styles.MatchWrapper}>
+        <img src={match.main_photo} alt={match.main_photo} className={styles.MatchMainPhoto}/>
         <div>
           <p>{match.display_name}, {match.age}</p>
           <p>{match.job_title}</p>
