@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Sidebar from '../../components/Sidebar';
+import Main from '../../components/Main';
 import styles from './Matches.css';
 
 const fetchMatches = (url) => {
@@ -73,8 +74,8 @@ class Matches extends Component {
 
     return matches.map((match, index) => (
       <div key={index} className={styles.MatchWrapper}>
-        <img src={match.main_photo} alt={match.main_photo} className={styles.MatchMainPhoto}/>
-        <div>
+        <img src={match.main_photo} alt={match.main_photo} className={styles.MatchPhoto}/>
+        <div className={styles.MatchDetails}>
           <p>{match.display_name}, {match.age}</p>
           <p>{match.job_title}</p>
           <p>{match.city.name}</p>
@@ -90,14 +91,10 @@ class Matches extends Component {
           filters={this.state.filters}
           handleCheckboxFilterChange={this.handleCheckboxFilterChange}
         />
-        <div className={styles.MainWrapper}>
-          <div className={styles.Main}>
-            <div className={styles.MainHeading}>Matches</div>
-            <div className={styles.MainBody}>
-              {this.renderMatches()}
-            </div>
-          </div>
-        </div>
+        <Main
+          heading="Matches"
+          body={this.renderMatches()}
+        />
       </div>
     );
   }

@@ -1,36 +1,16 @@
 .Matches {
   display: flex;
 
-  .MainWrapper {
-    flex: 5;
-    padding: 10px 10px 10px 0;
-  
-    .Main {
-      border: 1px solid #ddd;
-      border-radius: 5px;
-  
-      .MainHeading {
-        background-color: #f5f5f5;
-        border-bottom: 1px solid #ddd;
-        padding: 10px;
-      }
-  
-      .MainBody {
-        padding: 10px;
+  .MatchWrapper {
+    display: flex;
+    padding-bottom: 10px;
 
-        .MatchWrapper {
-          display: flex;
+    .MatchPhoto {
+      padding-right: 10px;
+      width: 300px;
+    }
 
-          img {
-            display: block;
-            margin: 0 10px 10px 0;
-          }
-        }
-
-        .MatchMainPhoto {
-          width: 300px;
-        }
-      }
+    .MatchDetails {
     }
   }
 }
