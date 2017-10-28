@@ -3,7 +3,7 @@ const expect = require('chai').expect;
 const chaiHttp = require('chai-http');
 const config = require('../config');
 const server = require('../app');
-const getDistanceFromLatLonInKm = require('../utils');
+const getDistanceFromLatLonInKm = require('../utils/distance');
 
 chai.use(chaiHttp);
 
@@ -63,7 +63,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches with a compatibility score >= 0.75', (done) => {
     chai.request(server)
-    .get('/api/matches?compatibilityStart=0.75')
+    .get('/api/matches?compatibilityScoreMin=0.75')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -77,7 +77,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches with a compatibility score <= 0.5', (done) => {
     chai.request(server)
-    .get('/api/matches?compatibilityEnd=0.5')
+    .get('/api/matches?compatibilityScoreMax=0.5')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -91,7 +91,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches with a compatibility score between 0.5 and 0.75', (done) => {
     chai.request(server)
-    .get('/api/matches?compatibilityStart=0.5&compatibilityEnd=0.75')
+    .get('/api/matches?compatibilityScoreMin=0.5&compatibilityScoreMax=0.75')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -105,7 +105,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches who are older than 30', (done) => {
     chai.request(server)
-    .get('/api/matches?ageStart=30')
+    .get('/api/matches?ageMin=30')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -119,7 +119,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches who are younger than 40', (done) => {
     chai.request(server)
-    .get('/api/matches?ageEnd=40')
+    .get('/api/matches?ageMax=40')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -133,7 +133,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches who are in their 30s', (done) => {
     chai.request(server)
-    .get('/api/matches?ageStart=30&ageEnd=39')
+    .get('/api/matches?ageMin=30&ageMax=39')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -147,7 +147,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches who are taller than 170cm', (done) => {
     chai.request(server)
-    .get('/api/matches?heightStart=170')
+    .get('/api/matches?heightMin=170')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -161,7 +161,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches who are smaller than 170cm', (done) => {
     chai.request(server)
-    .get('/api/matches?heightEnd=170')
+    .get('/api/matches?heightMax=170')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -175,7 +175,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches who are between 160cm and 170cm', (done) => {
     chai.request(server)
-    .get('/api/matches?heightStart=160&heightEnd=170')
+    .get('/api/matches?heightMin=160&heightMax=170')
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
@@ -189,7 +189,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches who are located further than 300km', (done) => {
     chai.request(server)
-    .get('/api/matches?distanceStart=300')
+    .get('/api/matches?distanceMin=300')
     .end((err, res) => {
       const user = server.get('user');
       
@@ -206,7 +206,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches who are located within 30km', (done) => {
     chai.request(server)
-    .get('/api/matches?distanceEnd=30')
+    .get('/api/matches?distanceMax=30')
     .end((err, res) => {
       const user = server.get('user');
 
@@ -223,7 +223,7 @@ describe('GET /api/matches', () => {
 
   it('should get all matches who are located within 30km and 100km', (done) => {
     chai.request(server)
-    .get('/api/matches?distanceStart=30&distanceEnd=100')
+    .get('/api/matches?distanceMin=30&distanceMax=100')
     .end((err, res) => {
       const user = server.get('user');
 
@@ -247,7 +247,7 @@ describe('GET /api/matches', () => {
       expect(res.body.error).to.be.an('object');
       expect(res.body.error).to.eql({
         status: 400,
-        message: config.ERR_MSG_HAS_PHOTO_FILTER
+        message: config.ERR_MSG_PARAM_HAS_PHOTO
       });
       done();
     });
@@ -262,7 +262,7 @@ describe('GET /api/matches', () => {
       expect(res.body.error).to.be.an('object');
       expect(res.body.error).to.eql({
         status: 400,
-        message: config.ERR_MSG_HAS_EXCHANGED_FILTER
+        message: config.ERR_MSG_PARAM_HAS_EXCHANGED
       });
       done();
     });
@@ -277,217 +277,232 @@ describe('GET /api/matches', () => {
       expect(res.body.error).to.be.an('object');
       expect(res.body.error).to.eql({
         status: 400,
-        message: config.ERR_MSG_IS_FAVOURITE_FILTER
+        message: config.ERR_MSG_PARAM_IS_FAVOURITE
       });
       done();
     });
   });
 
-  it('should get a 404 json object if compatibilityStart is not a number', (done) => {
+  it('should get a 404 json object if compatibilityScoreMin is not a number', (done) => {
     chai.request(server)
-    .get('/api/matches?compatibilityStart=now')
+    .get('/api/matches?compatibilityScoreMin=now')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
       expect(res.body.error).to.be.an('object');
       expect(res.body.error).to.eql({
         status: 400,
-        message: config.ERR_MSG_COMPATIBILITY_START_FILTER
+        message: config.ERR_MSG_PARAM_COMPATIBILITY_SCORE_MIN
       });
       done();
     });
   });
 
-  it('should get a 404 json object if compatibilityStart is a number out of range', (done) => {
+  it('should get a 404 json object if compatibilityScoreMin is a number out of range', (done) => {
     chai.request(server)
-    .get('/api/matches?compatibilityStart=5')
+    .get('/api/matches?compatibilityScoreMin=5')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
       expect(res.body.error).to.be.an('object');
       expect(res.body.error).to.eql({
         status: 400,
-        message: config.ERR_MSG_COMPATIBILITY_START_FILTER
+        message: config.ERR_MSG_PARAM_COMPATIBILITY_SCORE_MIN
       });
       done();
     });
   });
 
-  it('should get a 404 json object if compatibilityEnd is not a number', (done) => {
+  it('should get a 404 json object if compatibilityScoreMax is not a number', (done) => {
     chai.request(server)
-    .get('/api/matches?compatibilityEnd=tomorrow')
+    .get('/api/matches?compatibilityScoreMax=tomorrow')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
       expect(res.body.error).to.be.an('object');
       expect(res.body.error).to.eql({
         status: 400,
-        message: config.ERR_MSG_COMPATIBILITY_END_FILTER
+        message: config.ERR_MSG_PARAM_COMPATIBILITY_SCORE_MAX
       });
       done();
     });
   });
 
-  it('should get a 404 json object if compatibilityEnd is a number out of range', (done) => {
+  it('should get a 404 json object if compatibilityScoreMax is a number out of range', (done) => {
     chai.request(server)
-    .get('/api/matches?compatibilityEnd=10')
+    .get('/api/matches?compatibilityScoreMax=10')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
       expect(res.body.error).to.be.an('object');
       expect(res.body.error).to.eql({
         status: 400,
-        message: config.ERR_MSG_COMPATIBILITY_END_FILTER
+        message: config.ERR_MSG_PARAM_COMPATIBILITY_SCORE_MAX
       });
       done();
     });
   });
 
-  it('should get a 404 json object if ageStart is not a number', (done) => {
+  it('should get a 404 json object if ageMin is not a number', (done) => {
     chai.request(server)
-    .get('/api/matches?ageStart=yesterday')
+    .get('/api/matches?ageMin=yesterday')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
       expect(res.body.error).to.be.an('object');
       expect(res.body.error).to.eql({
         status: 400,
-        message: config.ERR_MSG_AGE_START_FILTER
+        message: config.ERR_MSG_PARAM_AGE_MIN
       });
       done();
     });
   });
 
-  it('should get a 404 json object if ageStart is a number out of range', (done) => {
+  it('should get a 404 json object if ageMin is a number out of range', (done) => {
     chai.request(server)
-    .get('/api/matches?ageStart=17')
+    .get('/api/matches?ageMin=17')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
       expect(res.body.error).to.be.an('object');
       expect(res.body.error).to.eql({
         status: 400,
-        message: config.ERR_MSG_AGE_START_FILTER
+        message: config.ERR_MSG_PARAM_AGE_MIN
       });
       done();
     });
   });
 
-  it('should get a 404 json object if ageEnd is not a number', (done) => {
+  it('should get a 404 json object if ageMax is not a number', (done) => {
     chai.request(server)
-    .get('/api/matches?ageEnd=notanumber')
+    .get('/api/matches?ageMax=notanumber')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
       expect(res.body.error).to.be.an('object');
       expect(res.body.error).to.eql({
         status: 400,
-        message: config.ERR_MSG_AGE_END_FILTER
+        message: config.ERR_MSG_PARAM_AGE_MAX
       });
       done();
     });
   });
 
-  it('should get a 404 json object if ageEnd is a number out of range', (done) => {
+  it('should get a 404 json object if ageMax is a number out of range', (done) => {
     chai.request(server)
-    .get('/api/matches?ageEnd=100')
+    .get('/api/matches?ageMax=100')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
       expect(res.body.error).to.be.an('object');
       expect(res.body.error).to.eql({
         status: 400,
-        message: config.ERR_MSG_AGE_END_FILTER
+        message: config.ERR_MSG_PARAM_AGE_MAX
       });
       done();
     });
   });
 
-  it('should get a 404 json object if heightStart is not a number', (done) => {
+  it('should get a 404 json object if heightMin is not a number', (done) => {
     chai.request(server)
-    .get('/api/matches?heightStart=stillnotanumber')
+    .get('/api/matches?heightMin=stillnotanumber')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
       expect(res.body.error).to.be.an('object');
       expect(res.body.error).to.eql({
         status: 400,
-        message: config.ERR_MSG_HEIGHT_START_FILTER
+        message: config.ERR_MSG_PARAM_HEIGHT_MIN
       });
       done();
     });
   });
 
-  it('should get a 404 json object if heightStart is a number out of range', (done) => {
+  it('should get a 404 json object if heightMin is a number out of range', (done) => {
     chai.request(server)
-    .get('/api/matches?heightStart=300')
+    .get('/api/matches?heightMin=300')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
       expect(res.body.error).to.be.an('object');
       expect(res.body.error).to.eql({
         status: 400,
-        message: config.ERR_MSG_HEIGHT_START_FILTER
+        message: config.ERR_MSG_PARAM_HEIGHT_MIN
       });
       done();
     });
   });
 
-  it('should get a 404 json object if heightEnd is not a number', (done) => {
+  it('should get a 404 json object if heightMax is not a number', (done) => {
     chai.request(server)
-    .get('/api/matches?heightEnd=notanumber')
+    .get('/api/matches?heightMax=notanumber')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
       expect(res.body.error).to.be.an('object');
       expect(res.body.error).to.eql({
         status: 400,
-        message: config.ERR_MSG_HEIGHT_END_FILTER
+        message: config.ERR_MSG_PARAM_HEIGHT_MAX
       });
       done();
     });
   });
 
-  it('should get a 404 json object if heightEnd is a number out of range', (done) => {
+  it('should get a 404 json object if heightMax is a number out of range', (done) => {
     chai.request(server)
-    .get('/api/matches?heightEnd=112')
+    .get('/api/matches?heightMax=112')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
       expect(res.body.error).to.be.an('object');
       expect(res.body.error).to.eql({
         status: 400,
-        message: config.ERR_MSG_HEIGHT_END_FILTER
+        message: config.ERR_MSG_PARAM_HEIGHT_MAX
       });
       done();
     });
   });
 
-  it('should get a 404 json object if distanceStart is not a number', (done) => {
+  it('should get a 404 json object if distanceMin is not a number', (done) => {
     chai.request(server)
-    .get('/api/matches?distanceStart=veryfar')
+    .get('/api/matches?distanceMin=veryfar')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
       expect(res.body.error).to.be.an('object');
       expect(res.body.error).to.eql({
         status: 400,
-        message: config.ERR_MSG_DISTANCE_START_FILTER
+        message: config.ERR_MSG_PARAM_DISTANCE_MIN
       });
       done();
     });
   });
 
-  it('should get a 404 json object if distanceEnd is not a number', (done) => {
+  it('should get a 404 json object if distanceMin is negative', (done) => {
     chai.request(server)
-    .get('/api/matches?distanceEnd=farfaraway')
+    .get('/api/matches?distanceMin=-1')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
       expect(res.body.error).to.be.an('object');
       expect(res.body.error).to.eql({
         status: 400,
-        message: config.ERR_MSG_DISTANCE_END_FILTER
+        message: config.ERR_MSG_PARAM_DISTANCE_MIN
+      });
+      done();
+    });
+  });
+
+  it('should get a 404 json object if distanceMax is not a number', (done) => {
+    chai.request(server)
+    .get('/api/matches?distanceMax=farfaraway')
+    .end((err, res) => {
+      expect(res).to.have.status(400);
+      expect(res).to.be.json;
+      expect(res.body.error).to.be.an('object');
+      expect(res.body.error).to.eql({
+        status: 400,
+        message: config.ERR_MSG_PARAM_DISTANCE_MAX
       });
       done();
     });

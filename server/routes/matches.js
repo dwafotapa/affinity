@@ -2,7 +2,8 @@ require('../utils/Number.prototype');
 const config = require('../config');
 const express = require('express');
 const db = require('../database/matches.json');
-const getDistanceFromLatLonInKm = require('../utils');
+const getDistanceFromLatLonInKm = require('../utils/distance');
+const createError = require('../utils/error');
 const router = express.Router();
 
 // inits the matches
@@ -13,19 +14,18 @@ router.get('/', (req, res, next) => {
 
 // handles the hasPhoto parameter
 router.get('/', (req, res, next) => {
-  if (req.query['hasPhoto'] === undefined) {
+  if (req.query.hasPhoto === undefined) {
     return next();
   }
 
-  switch (req.query['hasPhoto']) {
+  switch (req.query.hasPhoto) {
     case 'true':
       req.matches = req.matches.filter(match => match.main_photo !== undefined);
       break;
     case 'false':
       return next();
     default:
-      const err = new Error(config.ERR_MSG_HAS_PHOTO_FILTER);
-      err.status = 400;
+      const err = createError(config.ERR_MSG_PARAM_HAS_PHOTO, 400);
       return next(err);
   }
 
@@ -34,19 +34,18 @@ router.get('/', (req, res, next) => {
 
 // handles the hasExchanged parameter
 router.get('/', (req, res, next) => {
-  if (req.query['hasExchanged'] === undefined) {
+  if (req.query.hasExchanged === undefined) {
     return next();
   }
   
-  switch (req.query['hasExchanged']) {
+  switch (req.query.hasExchanged) {
     case 'true':
       req.matches = req.matches.filter(match => match.contacts_exchanged !== undefined && match.contacts_exchanged > 0);
       break;
     case 'false':
       return next();
     default:
-      const err = new Error(config.ERR_MSG_HAS_EXCHANGED_FILTER);
-      err.status = 400;
+      const err = createError(config.ERR_MSG_PARAM_HAS_EXCHANGED, 400);
       return next(err);
   }
 
@@ -55,164 +54,155 @@ router.get('/', (req, res, next) => {
 
 // handles the isFavourite parameter
 router.get('/', (req, res, next) => {
-  if (req.query['isFavourite'] === undefined) {
+  if (req.query.isFavourite === undefined) {
     return next();
   }
 
-  switch (req.query['isFavourite']) {
+  switch (req.query.isFavourite) {
     case 'true':
       req.matches = req.matches.filter(match => match.favourite !== undefined && match.favourite);
     case 'false':
       return next();
     default:
-      const err = new Error(config.ERR_MSG_IS_FAVOURITE_FILTER);
-      err.status = 400;
+      const err = createError(config.ERR_MSG_PARAM_IS_FAVOURITE, 400);
       return next(err);
   }
 
   next();
 });
 
-// handles the compatibilityStart parameter
+// handles the compatibilityScoreMin parameter
 router.get('/', (req, res, next) => {
-  if (req.query['compatibilityStart'] === undefined) {
+  if (req.query.compatibilityScoreMin === undefined) {
     return next();
   }
 
-  const compatibilityStart = Number(req.query['compatibilityStart']);
-  if (isNaN(compatibilityStart) || compatibilityStart.isOutOfRange(config.COMPATIBILITY_SCORE_LOWER_BOUND, config.COMPATIBILITY_SCORE_UPPER_BOUND)) {
-    const err = new Error(config.ERR_MSG_COMPATIBILITY_START_FILTER);
-    err.status = 400;
+  const compatibilityScoreMin = Number(req.query.compatibilityScoreMin);
+  if (isNaN(compatibilityScoreMin) || compatibilityScoreMin.isOutOfRange(config.COMPATIBILITY_SCORE_MIN, config.COMPATIBILITY_SCORE_MAX)) {
+    const err = createError(config.ERR_MSG_PARAM_COMPATIBILITY_SCORE_MIN, 400);
     return next(err);
   }
 
-  req.matches = req.matches.filter(match => match.compatibility_score !== undefined && match.compatibility_score >= compatibilityStart);
+  req.matches = req.matches.filter(match => match.compatibility_score !== undefined && match.compatibility_score >= compatibilityScoreMin);
   next();
 });
 
-// handles the compatibilityEnd parameter
+// handles the compatibilityScoreMax parameter
 router.get('/', (req, res, next) => {
-  if (req.query['compatibilityEnd'] === undefined) {
+  if (req.query.compatibilityScoreMax === undefined) {
     return next();
   }
 
-  const compatibilityEnd = Number(req.query['compatibilityEnd']);
-  if (isNaN(compatibilityEnd) || compatibilityEnd.isOutOfRange(config.COMPATIBILITY_SCORE_LOWER_BOUND, config.COMPATIBILITY_SCORE_UPPER_BOUND)) {
-    const err = new Error(config.ERR_MSG_COMPATIBILITY_END_FILTER);
-    err.status = 400;
+  const compatibilityScoreMax = Number(req.query.compatibilityScoreMax);
+  if (isNaN(compatibilityScoreMax) || compatibilityScoreMax.isOutOfRange(config.COMPATIBILITY_SCORE_MIN, config.COMPATIBILITY_SCORE_MAX)) {
+    const err = createError(config.ERR_MSG_PARAM_COMPATIBILITY_SCORE_MAX, 400);
     return next(err);
   }
 
-  req.matches = req.matches.filter(match => match.compatibility_score !== undefined && match.compatibility_score <= compatibilityEnd);
+  req.matches = req.matches.filter(match => match.compatibility_score !== undefined && match.compatibility_score <= compatibilityScoreMax);
   next();
 });
 
-// handles the ageStart parameter
+// handles the ageMin parameter
 router.get('/', (req, res, next) => {
-  if (req.query['ageStart'] === undefined) {
+  if (req.query.ageMin === undefined) {
     return next();
   }
 
-  const ageStart = Number(req.query['ageStart']);
-  if (isNaN(ageStart) || ageStart.isOutOfRange(config.AGE_LOWER_BOUND, config.AGE_UPPER_BOUND)) {
-    const err = new Error(config.ERR_MSG_AGE_START_FILTER);
-    err.status = 400;
+  const ageMin = Number(req.query.ageMin);
+  if (isNaN(ageMin) || ageMin.isOutOfRange(config.AGE_MIN, config.AGE_MAX)) {
+    const err = createError(config.ERR_MSG_PARAM_AGE_MIN, 400);
     return next(err);
   }
 
-  req.matches = req.matches.filter(match => match.age !== undefined && match.age >= ageStart);
+  req.matches = req.matches.filter(match => match.age !== undefined && match.age >= ageMin);
   next();
 });
 
-// handles the ageEnd parameter
+// handles the ageMax parameter
 router.get('/', (req, res, next) => {
-  if (req.query['ageEnd'] === undefined) {
+  if (req.query.ageMax === undefined) {
     return next();
   }
 
-  const ageEnd = Number(req.query['ageEnd']);
-  if (isNaN(ageEnd) || ageEnd.isOutOfRange(config.AGE_LOWER_BOUND, config.AGE_UPPER_BOUND)) {
-    const err = new Error(config.ERR_MSG_AGE_END_FILTER);
-    err.status = 400;
+  const ageMax = Number(req.query.ageMax);
+  if (isNaN(ageMax) || ageMax.isOutOfRange(config.AGE_MIN, config.AGE_MAX)) {
+    const err = createError(config.ERR_MSG_PARAM_AGE_MAX, 400);
     return next(err);
   }
 
-  req.matches = req.matches.filter(match => match.age !== undefined && match.age <= ageEnd);
+  req.matches = req.matches.filter(match => match.age !== undefined && match.age <= ageMax);
   next();
 });
 
-// handles the heightStart parameter
+// handles the heightMin parameter
 router.get('/', (req, res, next) => {
-  if (req.query['heightStart'] === undefined) {
+  if (req.query.heightMin === undefined) {
     return next();
   }
 
-  const heightStart = Number(req.query['heightStart']);
-  if (isNaN(heightStart) || heightStart.isOutOfRange(config.HEIGHT_LOWER_BOUND, config.HEIGHT_UPPER_BOUND)) {
-    const err = new Error(config.ERR_MSG_HEIGHT_START_FILTER);
-    err.status = 400;
+  const heightMin = Number(req.query.heightMin);
+  if (isNaN(heightMin) || heightMin.isOutOfRange(config.HEIGHT_MIN, config.HEIGHT_MAX)) {
+    const err = createError(config.ERR_MSG_PARAM_HEIGHT_MIN, 400);
     return next(err);
   }
 
-  req.matches = req.matches.filter(match => match.height_in_cm !== undefined && match.height_in_cm >= heightStart);
+  req.matches = req.matches.filter(match => match.height_in_cm !== undefined && match.height_in_cm >= heightMin);
   next();
 });
 
-// handles the heightEnd parameter
+// handles the heightMax parameter
 router.get('/', (req, res, next) => {
-  if (req.query['heightEnd'] === undefined) {
+  if (req.query.heightMax === undefined) {
     return next();
   }
 
-  const heightEnd = Number(req.query['heightEnd']);
-  if (isNaN(heightEnd) || heightEnd.isOutOfRange(config.HEIGHT_LOWER_BOUND, config.HEIGHT_UPPER_BOUND)) {
-    const err = new Error(config.ERR_MSG_HEIGHT_END_FILTER);
-    err.status = 400;
+  const heightMax = Number(req.query.heightMax);
+  if (isNaN(heightMax) || heightMax.isOutOfRange(config.HEIGHT_MIN, config.HEIGHT_MAX)) {
+    const err = createError(config.ERR_MSG_PARAM_HEIGHT_MAX, 400);
     return next(err);
   }
 
-  req.matches = req.matches.filter(match => match.height_in_cm !== undefined && match.height_in_cm <= heightEnd);
+  req.matches = req.matches.filter(match => match.height_in_cm !== undefined && match.height_in_cm <= heightMax);
   next();
 });
 
-// handles the distanceStart parameter
+// handles the distanceMin parameter
 router.get('/', (req, res, next) => {
-  if (req.query['distanceStart'] === undefined) {
+  if (req.query.distanceMin === undefined) {
     return next();
   }
 
-  const distanceStart = Number(req.query['distanceStart']);
-  if (isNaN(distanceStart)) {
-    const err = new Error(config.ERR_MSG_DISTANCE_START_FILTER);
-    err.status = 400;
+  const distanceMin = Number(req.query.distanceMin);
+  if (isNaN(distanceMin)) {
+    const err = createError(config.ERR_MSG_PARAM_DISTANCE_MIN, 400);
     return next(err);
   }
   
   const user = req.app.get('user');
   req.matches = req.matches.filter(match =>
     match.city !== undefined
-    && getDistanceFromLatLonInKm(user.city.lat, user.city.lon, match.city.lat, match.city.lon) >= distanceStart
+    && getDistanceFromLatLonInKm(user.city.lat, user.city.lon, match.city.lat, match.city.lon) >= distanceMin
   );
   next();
 });
 
-// handles the distanceEnd parameter
+// handles the distanceMax parameter
 router.get('/', (req, res, next) => {
-  if (req.query['distanceEnd'] === undefined) {
+  if (req.query.distanceMax === undefined) {
     return next();
   }
 
-  const distanceEnd = Number(req.query['distanceEnd']);
-  if (isNaN(distanceEnd)) {
-    const err = new Error(config.ERR_MSG_DISTANCE_END_FILTER);
-    err.status = 400;
+  const distanceMax = Number(req.query.distanceMax);
+  if (isNaN(distanceMax)) {
+    const err = createError(config.ERR_MSG_PARAM_DISTANCE_MAX, 400);
     return next(err);
   }
   
   const user = req.app.get('user');
   req.matches = req.matches.filter(match =>
     match.city !== undefined
-    && getDistanceFromLatLonInKm(user.city.lat, user.city.lon, match.city.lat, match.city.lon) <= distanceEnd
+    && getDistanceFromLatLonInKm(user.city.lat, user.city.lon, match.city.lat, match.city.lon) <= distanceMax
   );
   next();
 });
