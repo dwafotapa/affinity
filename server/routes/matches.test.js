@@ -478,21 +478,6 @@ describe('GET /api/matches', () => {
     });
   });
 
-  it('should get a 404 json object if distanceMin is negative', (done) => {
-    chai.request(server)
-    .get('/api/matches?distanceMin=-1')
-    .end((err, res) => {
-      expect(res).to.have.status(400);
-      expect(res).to.be.json;
-      expect(res.body.error).to.be.an('object');
-      expect(res.body.error).to.eql({
-        status: 400,
-        message: config.ERR_MSG_PARAM_DISTANCE_MIN
-      });
-      done();
-    });
-  });
-
   it('should get a 404 json object if distanceMax is not a number', (done) => {
     chai.request(server)
     .get('/api/matches?distanceMax=farfaraway')
