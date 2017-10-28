@@ -23,11 +23,7 @@ class Matches extends Component {
     super(props);
     this.state = {
       isFetching: false,
-      filters: {
-        hasPhoto: false,
-        hasExchanged: false,
-        isFavourite: false
-      },
+      filters: {},
       entities: {
         matches: []
       },
@@ -47,7 +43,7 @@ class Matches extends Component {
           isFetching: false,
           entities: {
             ...prevState.entities,
-            matches: json.matches
+            matches: json.matches || []
           }
         }));
       });
@@ -56,13 +52,51 @@ class Matches extends Component {
   
   handleCheckboxFilterChange = (e) => {
     const { name, checked } = e.target;
-    this.setState(prevState => ({
-      isFetching: true,
-      filters: {
-        ...prevState.filters,
-        [name]: checked
-      }
-    }));
+    if (checked) {
+      this.setState(prevState => ({
+        isFetching: true,
+        filters: {
+          ...prevState.filters,
+          [name]: checked
+        }
+      }));
+    } else {
+      this.setState(prevState => {
+        const filters = Object.assign({}, prevState.filters);
+        delete filters[name];
+        return {
+          isFetching: true,
+          filters
+        }
+      });
+    }
+  }
+
+  handleInputRangeFilterChange = (prevName, name, value) => {
+    switch (value) {
+      case 0:
+        this.setState(prevState => {
+          const filters = Object.assign({}, prevState.filters);
+          delete filters[prevName];
+          return {
+            isFetching: true,
+            filters
+          };
+        });
+        break;
+      case 330:
+        value = 300;
+      default:
+        this.setState(prevState => {
+          const filters = Object.assign({}, prevState.filters);
+          delete filters[prevName];
+          filters[name] = value;
+          return {
+            isFetching: true,
+            filters
+          };
+        });
+    }
   }
 
   renderMatches = () => {
@@ -90,6 +124,7 @@ class Matches extends Component {
         <Sidebar
           filters={this.state.filters}
           handleCheckboxFilterChange={this.handleCheckboxFilterChange}
+          handleInputRangeFilterChange={this.handleInputRangeFilterChange}
         />
         <Main
           heading="Matches"

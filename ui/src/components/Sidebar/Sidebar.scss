@@ -16,6 +16,14 @@
 
     .SidebarBody {
       padding: 10px;
+
+      .SidebarFilter {
+        padding-bottom: 10px;
+        
+        .InputRange {
+          padding: 20px 10px;
+        }
+      }
     }
   }
 }
