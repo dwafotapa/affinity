@@ -3,15 +3,9 @@ import InputRange from 'react-input-range';
 import styles from './Sidebar.css';
 import 'react-input-range/lib/css/index.css';
 
-const formatLabel = (value, type) => {
-  switch (value) {
-    case 0:
-      return value;
-    case 330:
-      return '> 300';
-    default:
-      return `< ${value}`;
-  }
+const formatDistanceLabel = (value, type) => {
+  const operator = value === 300 ? '>' : '<';
+  return `${operator} ${value}`;
 };
 
 const Sidebar = (props) => {
@@ -49,15 +43,14 @@ const Sidebar = (props) => {
             <label>Distance in km</label>
             <div className={styles.InputRange}>
               <InputRange
-                formatLabel={formatLabel}
-                minValue={0}
-                maxValue={330}
+                formatLabel={formatDistanceLabel}
+                minValue={30}
+                maxValue={300}
                 onChange={value => props.handleInputRangeFilterChange(
-                  filters.distanceMin ? 'distanceMin' : (filters.distanceMax ? 'distanceMax' : ''),
-                  value === 330 ? 'distanceMin' : 'distanceMax',
+                  filters.distanceMin ? 'distanceMin' : 'distanceMax',
+                  value === 300 ? 'distanceMin' : 'distanceMax',
                   value)}
-                step={30}
-                value={filters.distanceMin || filters.distanceMax || 0}
+                value={filters.distanceMin || filters.distanceMax || 30}
               />
             </div>
           </div>

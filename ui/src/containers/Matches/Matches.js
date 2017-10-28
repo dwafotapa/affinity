@@ -23,7 +23,9 @@ class Matches extends Component {
     super(props);
     this.state = {
       isFetching: false,
-      filters: {},
+      filters: {
+        distanceMax: 30
+      },
       entities: {
         matches: []
       },
@@ -73,30 +75,15 @@ class Matches extends Component {
   }
 
   handleInputRangeFilterChange = (prevName, name, value) => {
-    switch (value) {
-      case 0:
-        this.setState(prevState => {
-          const filters = Object.assign({}, prevState.filters);
-          delete filters[prevName];
-          return {
-            isFetching: true,
-            filters
-          };
-        });
-        break;
-      case 330:
-        value = 300;
-      default:
-        this.setState(prevState => {
-          const filters = Object.assign({}, prevState.filters);
-          delete filters[prevName];
-          filters[name] = value;
-          return {
-            isFetching: true,
-            filters
-          };
-        });
-    }
+    this.setState(prevState => {
+      const filters = Object.assign({}, prevState.filters);
+      delete filters[prevName];
+      filters[name] = value;
+      return {
+        isFetching: true,
+        filters
+      };
+    });
   }
 
   renderMatches = () => {
