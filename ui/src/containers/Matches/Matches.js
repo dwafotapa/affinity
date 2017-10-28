@@ -24,6 +24,8 @@ class Matches extends Component {
     this.state = {
       isFetching: false,
       filters: {
+        compatibilityScoreMin: 0.01,
+        compatibilityScoreMax: 0.99,
         distanceMax: 30
       },
       entities: {
@@ -74,7 +76,7 @@ class Matches extends Component {
     }
   }
 
-  handleInputRangeFilterChange = (prevName, name, value) => {
+  handleInputRangeSingleFilterChange = (prevName, name, value) => {
     this.setState(prevState => {
       const filters = Object.assign({}, prevState.filters);
       delete filters[prevName];
@@ -86,11 +88,28 @@ class Matches extends Component {
     });
   }
 
+  handleInputRangeDoubleFilterChange = (nameMin, nameMax, value) => {
+    this.setState(prevState => {
+      return {
+        isFetching: true,
+        filters: {
+          ...prevState.filters,
+          [nameMin]: value.min,
+          [nameMax]: value.max
+        }
+      };
+    });
+  }
+
   renderMatches = () => {
     const { isFetching } = this.state;
     const { matches } = this.state.entities;
     if (isFetching) {
       return <div>Loading...</div>;
+    }
+
+    if (matches.length === 0) {
+      return 'No results found.';
     }
 
     return matches.map((match, index) => (
@@ -111,7 +130,8 @@ class Matches extends Component {
         <Sidebar
           filters={this.state.filters}
           handleCheckboxFilterChange={this.handleCheckboxFilterChange}
-          handleInputRangeFilterChange={this.handleInputRangeFilterChange}
+          handleInputRangeSingleFilterChange={this.handleInputRangeSingleFilterChange}
+          handleInputRangeDoubleFilterChange={this.handleInputRangeDoubleFilterChange}
         />
         <Main
           heading="Matches"
