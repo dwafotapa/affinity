@@ -26,6 +26,8 @@ class Matches extends Component {
       filters: {
         compatibilityScoreMin: 0.01,
         compatibilityScoreMax: 0.99,
+        ageMin: 18,
+        heightMin: 135,
         distanceMax: 30
       },
       entities: {
@@ -76,19 +78,8 @@ class Matches extends Component {
     }
   }
 
-  handleInputRangeSingleFilterChange = (prevName, name, value) => {
-    this.setState(prevState => {
-      const filters = Object.assign({}, prevState.filters);
-      delete filters[prevName];
-      filters[name] = value;
-      return {
-        isFetching: true,
-        filters
-      };
-    });
-  }
-
-  handleInputRangeDoubleFilterChange = (nameMin, nameMax, value) => {
+  
+  handleInputRangeFilterChange = (nameMin, nameMax, value) => {
     this.setState(prevState => {
       return {
         isFetching: true,
@@ -96,6 +87,20 @@ class Matches extends Component {
           ...prevState.filters,
           [nameMin]: value.min,
           [nameMax]: value.max
+        }
+      };
+    });
+  }
+  
+  handleInputRangeFilterWithSingleHandleChange = (prevName, name, value) => {
+    this.setState(prevState => {
+      const filters = Object.assign({}, prevState.filters);
+      delete filters[prevName];
+      return {
+        isFetching: true,
+        filters : {
+          ...filters,
+          [name]: value
         }
       };
     });
@@ -109,7 +114,7 @@ class Matches extends Component {
     }
 
     if (matches.length === 0) {
-      return 'No results found.';
+      return 'No matches found.';
     }
 
     return matches.map((match, index) => (
@@ -119,6 +124,8 @@ class Matches extends Component {
           <p>{match.display_name}, {match.age}</p>
           <p>{match.job_title}</p>
           <p>{match.city.name}</p>
+          <p>{match.height_in_cm}</p>
+          <p>{match.compatibility_score * 100}%</p>
         </div>
       </div>
     ));
@@ -130,8 +137,8 @@ class Matches extends Component {
         <Sidebar
           filters={this.state.filters}
           handleCheckboxFilterChange={this.handleCheckboxFilterChange}
-          handleInputRangeSingleFilterChange={this.handleInputRangeSingleFilterChange}
-          handleInputRangeDoubleFilterChange={this.handleInputRangeDoubleFilterChange}
+          handleInputRangeFilterChange={this.handleInputRangeFilterChange}
+          handleInputRangeFilterWithSingleHandleChange={this.handleInputRangeFilterWithSingleHandleChange}
         />
         <Main
           heading="Matches"
