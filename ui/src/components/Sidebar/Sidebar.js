@@ -26,11 +26,12 @@ const Sidebar = (props) => {
   const { filters } = props;
   return (
     <div className={styles.SidebarWrapper}>
-      <div className={styles.Sidebar}>
+      <form className={styles.Sidebar}>
         <div className={styles.SidebarHeading}>Filters</div>
         <div className={styles.SidebarBody}>
-          <div className={styles.SidebarFilter}>
+          <div className={styles.SidebarRow}>
             <input
+              id="hasPhoto"
               name="hasPhoto"
               type="checkbox"
               checked={filters.hasPhoto || false}
@@ -39,8 +40,9 @@ const Sidebar = (props) => {
             <span> </span>
             <label htmlFor="hasPhoto">Has photo</label>
           </div>
-          <div className={styles.SidebarFilter}>
+          <div className={styles.SidebarRow}>
             <input
+              id="hasExchanged"
               name="hasExchanged"
               type="checkbox"
               checked={filters.hasExchanged || false}
@@ -49,8 +51,9 @@ const Sidebar = (props) => {
             <span> </span>
             <label htmlFor="hasExchanged">In contact</label>
           </div>
-          <div className={styles.SidebarFilter}>
+          <div className={styles.SidebarRow}>
             <input
+              id="isFavourite"
               name="isFavourite"
               type="checkbox"
               checked={filters.isFavourite || false}
@@ -59,9 +62,9 @@ const Sidebar = (props) => {
             <span> </span>
             <label htmlFor="isFavourite">Favourite</label>
           </div>
-          <div className={styles.SidebarFilter}>
+          <div className={styles.SidebarRow}>
             <label>Compatibility Score</label>
-            <div className={styles.InputRange}>
+            <div className={styles.SidebarInputRange}>
               <InputRange
                 formatLabel={value => formatCompatibilityScoreLabel(value)}
                 minValue={0.01}
@@ -76,9 +79,9 @@ const Sidebar = (props) => {
               />
             </div>
           </div>
-          <div className={styles.SidebarFilter}>
+          <div className={styles.SidebarRow}>
             <label>Age</label>
-            <div className={styles.InputRange}>
+            <div className={styles.SidebarInputRange}>
               <InputRange
                 formatLabel={value => formatAgeLabel(value)}
                 minValue={18}
@@ -92,9 +95,9 @@ const Sidebar = (props) => {
               />
             </div>
           </div>
-          <div className={styles.SidebarFilter}>
+          <div className={styles.SidebarRow}>
             <label>Height</label>
-            <div className={styles.InputRange}>
+            <div className={styles.SidebarInputRange}>
               <InputRange
                 formatLabel={value => formatHeightLabel(value)}
                 minValue={135}
@@ -108,9 +111,9 @@ const Sidebar = (props) => {
               />
             </div>
           </div>
-          <div className={styles.SidebarFilter}>
+          <div className={styles.SidebarRow}>
             <label>Distance in km</label>
-            <div className={styles.InputRange}>
+            <div className={styles.SidebarInputRange}>
               <InputRange
                 formatLabel={value => formatDistanceLabel(value)}
                 minValue={30}
@@ -121,8 +124,13 @@ const Sidebar = (props) => {
               />
             </div>
           </div>
+          <div className={styles.SidebarRow}>
+            <div className={styles.SidebarResetButton}>
+              <button onClick={props.handleResetButtonClick}>Reset</button>
+            </div>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

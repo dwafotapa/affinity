@@ -23,20 +23,24 @@ class Matches extends Component {
     super(props);
     this.state = {
       isFetching: false,
+      ...this.resetFilters(),
+      entities: {
+        matches: []
+      },
+    }
+  }
+
+  resetFilters = () => {
+    return {
       filters: {
         compatibilityScoreMin: 0.01,
         compatibilityScoreMax: 0.99,
         ageMin: 18,
-        ageMax: 95,
         heightMin: 135,
-        heightMax: 210,
         distanceMin: 0,
         distanceMax: 30
-      },
-      entities: {
-        matches: []
-      },
-    };
+      }
+    }
   }
 
   componentDidMount() {
@@ -109,6 +113,14 @@ class Matches extends Component {
     });
   }
   
+  handleResetButtonClick = (e) => {
+    e.preventDefault();
+    this.setState({
+      isFetching: true,
+      ...this.resetFilters()
+    });
+  }
+
   renderMatches = () => {
     const { isFetching } = this.state;
     const { matches } = this.state.entities;
@@ -144,6 +156,7 @@ class Matches extends Component {
           handleInputRangeChangeComplete={this.handleInputRangeChangeComplete}
           handleInputRangeWithOpenBoundsChangeComplete={this.handleInputRangeWithOpenBoundsChangeComplete}
           handleInputRangeWithSingleSelectionChange={this.handleInputRangeWithSingleSelectionChange}
+          handleResetButtonClick={this.handleResetButtonClick}
         />
         <Main
           heading="Matches"
