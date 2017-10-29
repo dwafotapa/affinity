@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import Sidebar from '../../components/Sidebar';
 import Main from '../../components/Main';
+import goFetch from '../../utils/fetch';
 import styles from './Matches.css';
-
-const fetchMatches = (url) => {
-  return new Promise((resolve, reject) => {
-    fetch(url).then(response => resolve(response.json()));
-  });
-}
 
 const formatUrl = (origin, filters) => {
   let queryString = '';
@@ -47,19 +42,18 @@ class Matches extends Component {
     this.setState({ isFetching: true });
   }
 
-  componentDidUpdate() {
+  async componentDidUpdate() {
     const { isFetching, filters } = this.state;
     if (isFetching) {
       const url = formatUrl('http://localhost:5000/api/matches', filters);
-      fetchMatches(url).then(json => {
-        this.setState(prevState => ({
-          isFetching: false,
-          entities: {
-            ...prevState.entities,
-            matches: json.matches || []
-          }
-        }));
-      });
+      const json = await goFetch(url);
+      this.setState(prevState => ({
+        isFetching: false,
+        entities: {
+          ...prevState.entities,
+          matches: json.matches || []
+        }
+      }));
     }
   }
   
