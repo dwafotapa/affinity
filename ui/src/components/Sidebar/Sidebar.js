@@ -34,7 +34,7 @@ const Sidebar = (props) => {
               name="hasPhoto"
               type="checkbox"
               checked={filters.hasPhoto || false}
-              onChange={props.handleCheckboxFilterChange}
+              onChange={props.handleCheckboxChange}
             />
             <span> </span>
             <label htmlFor="hasPhoto">Has photo</label>
@@ -44,7 +44,7 @@ const Sidebar = (props) => {
               name="hasExchanged"
               type="checkbox"
               checked={filters.hasExchanged || false}
-              onChange={props.handleCheckboxFilterChange}
+              onChange={props.handleCheckboxChange}
             />
             <span> </span>
             <label htmlFor="hasExchanged">In contact</label>
@@ -54,7 +54,7 @@ const Sidebar = (props) => {
               name="isFavourite"
               type="checkbox"
               checked={filters.isFavourite || false}
-              onChange={props.handleCheckboxFilterChange}
+              onChange={props.handleCheckboxChange}
             />
             <span> </span>
             <label htmlFor="isFavourite">Favourite</label>
@@ -66,15 +66,12 @@ const Sidebar = (props) => {
                 formatLabel={value => formatCompatibilityScoreLabel(value)}
                 minValue={0.01}
                 maxValue={0.99}
-                onChange={value => props.handleInputRangeFilterChange(
-                  'compatibilityScoreMin',
-                  'compatibilityScoreMax',
-                  value
-                )}
+                onChange={value => props.handleInputRangeChange('compatibilityScoreMin', 'compatibilityScoreMax', value)}
+                onChangeComplete={value => props.handleInputRangeChangeComplete()}
                 step={0.01}
                 value={{
-                  min: filters.compatibilityScoreMin,
-                  max: filters.compatibilityScoreMax
+                  min: filters.compatibilityScoreMin || 0.01,
+                  max: filters.compatibilityScoreMax || 0.99
                 }}
               />
             </div>
@@ -86,11 +83,8 @@ const Sidebar = (props) => {
                 formatLabel={value => formatAgeLabel(value)}
                 minValue={18}
                 maxValue={95}
-                onChange={value => props.handleInputRangeFilterChange(
-                  'ageMin',
-                  'ageMax',
-                  value
-                )}
+                onChange={value => props.handleInputRangeChange('ageMin', 'ageMax', value)}
+                onChangeComplete={value => props.handleInputRangeWithOpenBoundsChangeComplete('ageMax', 95)}
                 value={{
                   min: filters.ageMin || 18,
                   max: filters.ageMax || 95
@@ -105,11 +99,8 @@ const Sidebar = (props) => {
                 formatLabel={value => formatHeightLabel(value)}
                 minValue={135}
                 maxValue={210}
-                onChange={value => props.handleInputRangeFilterChange(
-                  'heightMin',
-                  'heightMax',
-                  value
-                )}
+                onChange={value => props.handleInputRangeChange('heightMin', 'heightMax', value)}
+                onChangeComplete={value => props.handleInputRangeWithOpenBoundsChangeComplete('heightMax', 210)}                
                 value={{
                   min: filters.heightMin || 135,
                   max: filters.heightMax || 210
@@ -124,12 +115,9 @@ const Sidebar = (props) => {
                 formatLabel={value => formatDistanceLabel(value)}
                 minValue={30}
                 maxValue={300}
-                onChange={value => props.handleInputRangeFilterWithSingleHandleChange(
-                  filters.distanceMin ? 'distanceMin' : 'distanceMax',
-                  value === 300 ? 'distanceMin' : 'distanceMax',
-                  value
-                )}
-                value={filters.distanceMin || filters.distanceMax || 30}
+                onChange={value => props.handleInputRangeChange('distanceMin', 'distanceMax', { min: 0, max: value })}
+                onChangeComplete={value => props.handleInputRangeWithOpenBoundsChangeComplete('distanceMax', 300)}
+                value={filters.distanceMax || 300}
               />
             </div>
           </div>

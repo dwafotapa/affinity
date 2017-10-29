@@ -27,7 +27,10 @@ class Matches extends Component {
         compatibilityScoreMin: 0.01,
         compatibilityScoreMax: 0.99,
         ageMin: 18,
+        ageMax: 95,
         heightMin: 135,
+        heightMax: 210,
+        distanceMin: 0,
         distanceMax: 30
       },
       entities: {
@@ -56,7 +59,7 @@ class Matches extends Component {
     }
   }
   
-  handleCheckboxFilterChange = (e) => {
+  handleCheckboxChange = (e) => {
     const { name, checked } = e.target;
     if (checked) {
       this.setState(prevState => ({
@@ -78,34 +81,34 @@ class Matches extends Component {
     }
   }
 
-  
-  handleInputRangeFilterChange = (nameMin, nameMax, value) => {
-    this.setState(prevState => {
-      return {
-        isFetching: true,
-        filters: {
-          ...prevState.filters,
-          [nameMin]: value.min,
-          [nameMax]: value.max
-        }
-      };
-    });
-  }
-  
-  handleInputRangeFilterWithSingleHandleChange = (prevName, name, value) => {
-    this.setState(prevState => {
-      const filters = Object.assign({}, prevState.filters);
-      delete filters[prevName];
-      return {
-        isFetching: true,
-        filters : {
-          ...filters,
-          [name]: value
-        }
-      };
-    });
+  // sets the new values of the filter
+  handleInputRangeChange = (nameMin, nameMax, value) => {
+    this.setState(prevState => ({
+      filters: {
+        ...prevState.filters,
+        [nameMin]: value.min,
+        [nameMax]: value.max
+      }
+    }));
   }
 
+  handleInputRangeChangeComplete = () => {
+    this.setState({ isFetching: true });
+  }
+
+  handleInputRangeWithOpenBoundsChangeComplete = (name, boundValue) => {
+    this.setState(prevState => {
+      let filters = { ...prevState.filters };
+      if (filters[name] === boundValue) {
+        delete filters[name];
+      }
+      return {
+        isFetching: true,
+        filters
+      };
+    });
+  }
+  
   renderMatches = () => {
     const { isFetching } = this.state;
     const { matches } = this.state.entities;
@@ -136,9 +139,11 @@ class Matches extends Component {
       <div className={styles.Matches}>
         <Sidebar
           filters={this.state.filters}
-          handleCheckboxFilterChange={this.handleCheckboxFilterChange}
-          handleInputRangeFilterChange={this.handleInputRangeFilterChange}
-          handleInputRangeFilterWithSingleHandleChange={this.handleInputRangeFilterWithSingleHandleChange}
+          handleCheckboxChange={this.handleCheckboxChange}
+          handleInputRangeChange={this.handleInputRangeChange}
+          handleInputRangeChangeComplete={this.handleInputRangeChangeComplete}
+          handleInputRangeWithOpenBoundsChangeComplete={this.handleInputRangeWithOpenBoundsChangeComplete}
+          handleInputRangeWithSingleSelectionChange={this.handleInputRangeWithSingleSelectionChange}
         />
         <Main
           heading="Matches"
