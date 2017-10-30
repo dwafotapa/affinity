@@ -4,6 +4,10 @@
   flex: 1;
   padding: 10px;
 
+  @media #{$medium-only} {
+    flex: 2;
+  }
+
   .Sidebar {
     border: 1px solid $color-grey;
     border-radius: 5px;
@@ -12,8 +16,21 @@
       background-color: $color-lightgrey;
       border-bottom: 1px solid $color-grey;
       padding: 10px;
-    }
+      position: relative;
 
+      .SidebarToggleLink {
+        color: $color-purple;
+        display: none;
+        position: absolute;
+        right: 10px;
+        text-decoration: underline;
+
+        @media #{$small-and-down} {
+          display: inline;
+        }
+      }
+    }
+    
     .SidebarBody {
       padding: 10px;
 

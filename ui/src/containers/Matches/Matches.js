@@ -13,6 +13,14 @@ const formatUrl = (origin, filters) => {
   return `${origin}?${queryString}`;
 }
 
+const formatHeight = (height) => {
+  return `${height}cm`;
+}
+
+const formatCompatibilityScore = (compatibilityScore) => {
+  return `${compatibilityScore * 100}%`;
+}
+
 class Matches extends Component {
   constructor(props) {
     super(props);
@@ -69,7 +77,7 @@ class Matches extends Component {
       }));
     } else {
       this.setState(prevState => {
-        const filters = Object.assign({}, prevState.filters);
+        const filters = { ...prevState.filters };
         delete filters[name];
         return {
           isFetching: true,
@@ -79,7 +87,6 @@ class Matches extends Component {
     }
   }
 
-  // sets the new values of the filter
   handleInputRangeChange = (nameMin, nameMax, value) => {
     this.setState(prevState => ({
       filters: {
@@ -130,11 +137,11 @@ class Matches extends Component {
       <div key={index} className={styles.MatchWrapper}>
         <img src={match.main_photo} alt={match.main_photo} className={styles.MatchPhoto}/>
         <div className={styles.MatchDetails}>
-          <p>{match.display_name}, {match.age}</p>
-          <p>{match.job_title}</p>
-          <p>{match.city.name}</p>
-          <p>{match.height_in_cm}</p>
-          <p>{match.compatibility_score * 100}%</p>
+          <div><b>{match.display_name}</b>, {match.age}</div>
+          <div>{formatCompatibilityScore(match.compatibility_score)}</div>
+          <div>{formatHeight(match.height_in_cm)}</div>
+          <div>{match.city.name}</div>
+          <div>{match.job_title}</div>
         </div>
       </div>
     ));
