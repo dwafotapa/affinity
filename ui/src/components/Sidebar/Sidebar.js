@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import InputRange from 'react-input-range';
 import styles from './Sidebar.css';
 import 'react-input-range/lib/css/index.css';
@@ -152,6 +153,15 @@ class Sidebar extends Component {
       </div>
     );
   }
+};
+
+Sidebar.propTypes = {
+  filters: PropTypes.object.isRequired,
+  handleCheckboxChange: PropTypes.func.isRequired,
+  handleInputRangeChange: PropTypes.func.isRequired,
+  handleInputRangeChangeComplete: PropTypes.func.isRequired,
+  handleInputRangeWithOpenBoundsChangeComplete: PropTypes.func.isRequired,
+  handleResetButtonClick: PropTypes.func.isRequired
 };
 
 export default Sidebar;

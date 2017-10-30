@@ -25,7 +25,7 @@ class Matches extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isFetching: false,
+      isLoading: false,
       ...this.resetFilters(),
       entities: {
         matches: []
@@ -47,16 +47,16 @@ class Matches extends Component {
   }
 
   componentDidMount() {
-    this.setState({ isFetching: true });
+    this.setState({ isLoading: true });
   }
 
   async componentDidUpdate() {
-    const { isFetching, filters } = this.state;
-    if (isFetching) {
+    const { isLoading, filters } = this.state;
+    if (isLoading) {
       const url = formatUrl('http://localhost:5000/api/matches', filters);
       const json = await goFetch(url);
       this.setState(prevState => ({
-        isFetching: false,
+        isLoading: false,
         entities: {
           ...prevState.entities,
           matches: json.matches || []
@@ -69,7 +69,7 @@ class Matches extends Component {
     const { name, checked } = e.target;
     if (checked) {
       this.setState(prevState => ({
-        isFetching: true,
+        isLoading: true,
         filters: {
           ...prevState.filters,
           [name]: checked
@@ -80,7 +80,7 @@ class Matches extends Component {
         const filters = { ...prevState.filters };
         delete filters[name];
         return {
-          isFetching: true,
+          isLoading: true,
           filters
         }
       });
@@ -98,7 +98,7 @@ class Matches extends Component {
   }
 
   handleInputRangeChangeComplete = () => {
-    this.setState({ isFetching: true });
+    this.setState({ isLoading: true });
   }
 
   handleInputRangeWithOpenBoundsChangeComplete = (name, boundValue) => {
@@ -108,7 +108,7 @@ class Matches extends Component {
         delete filters[name];
       }
       return {
-        isFetching: true,
+        isLoading: true,
         filters
       };
     });
@@ -117,15 +117,15 @@ class Matches extends Component {
   handleResetButtonClick = (e) => {
     e.preventDefault();
     this.setState({
-      isFetching: true,
+      isLoading: true,
       ...this.resetFilters()
     });
   }
 
   renderMatches = () => {
-    const { isFetching } = this.state;
+    const { isLoading } = this.state;
     const { matches } = this.state.entities;
-    if (isFetching) {
+    if (isLoading) {
       return <div>Loading...</div>;
     }
 
@@ -156,7 +156,6 @@ class Matches extends Component {
           handleInputRangeChange={this.handleInputRangeChange}
           handleInputRangeChangeComplete={this.handleInputRangeChangeComplete}
           handleInputRangeWithOpenBoundsChangeComplete={this.handleInputRangeWithOpenBoundsChangeComplete}
-          handleInputRangeWithSingleSelectionChange={this.handleInputRangeWithSingleSelectionChange}
           handleResetButtonClick={this.handleResetButtonClick}
         />
         <Main
