@@ -37,7 +37,6 @@ class Sidebar extends Component {
   render() {
     const { filters } = this.props;
     const toggleLinkText = this.state.isExpanded ? 'Less' : 'More';
-    // const sidebarBodyclassNames = this.state.isExpanded ? styles.hide : styles.SidebarBody;
     return (
       <div className={styles.SidebarWrapper}>
         <form className={styles.Sidebar}>
