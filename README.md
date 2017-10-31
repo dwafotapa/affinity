@@ -54,11 +54,11 @@ My preferred choice for creating a RESTful API was Node.js with Express, Mocha a
 
 ### Client side
 
-I have used create-react-app and ejected from the default configuration to bootstrap the UI. React with Jest, Webpack, Sass and CSS-modules are the set of tools I've chosen to build the frontend. Webpack's hot reloading was a blessing when working on the frontend bits and I liked the simplicity of CSS-modules and the structured CSS of Sass.
+I have used create-react-app and ejected from the default configuration to bootstrap the UI. React with Jest, Enzyme, Webpack, Sass and CSS-modules are the set of tools I've chosen to build the frontend. Webpack's hot reloading was a blessing when working on the frontend bits and I have liked the simplicity of CSS-modules and the structured CSS of Sass. I have built my app using pure functions with immutable JavaScript to have more robust code and prevent side effects. Also I have tried not to use too many npm packages to show my knowledge of ES6 (no lodash for example).
 
 ## Difficulties
 
-The difficulties I have encountered were mainly on the frontend with setup up the tests and some of the technologies I had never used before. Unfortunately I didn't apply TDD on the client side as I was discovering lots of new tools like React-Router, CSS modules or Sass and all my efforts were focused on making them all work together. In the end, I managed to write some good tests for the Sidebar event handlers which is the challenging bit of the app and it was nice to write some frontend tests as well for the first time.
+The difficulties I have encountered were mainly on the frontend with setup up the tests and some of the technologies I had never used before. Unfortunately I didn't apply TDD on the client side as I was discovering lots of new tools like React-Router, CSS modules or Sass and all my efforts were focused on making them all work together. In the end, I have managed to write some good tests for the Sidebar event handlers which are the critical bit of the app.
 
 Implementing the reusable Slider event handlers was a challenge as some of the Sliders have one or two handles and some of the Sliders have open bounds or don't. I used this React component [https://github.com/davidchin/react-input-range](https://github.com/davidchin/react-input-range) and found a bug because my Slider component was making multiple ajax requests when I drag-and-dropped it. The fix was to read the docs (rtfm...), discover there was an OnChangeComplete event handler and introduce a flag in the state to specifically trigger an ajax request.
 
@@ -71,10 +71,10 @@ A list of improvements I have thought of:
 - matches should appear as you scroll down when there are more than 10.
 - the reset button shouldn't send an ajax request when the filters are already in their default state.
 - the look & feel and responsive design of the app could be improved.
-- the validation of query parameters could be improved on the server side (checking for negative values for example).
+- the validation of query parameters could be improved on the server side by using express-validator to validate query params (no sanitization needed, it's done by default by React DOM), checking for negative values and min values greater than max values.
 
 ## Wrapping up
 
-I didn't know much about Node.js before starting this project and I have found it to be very lightweight and powerful. Learning new technologies was very rewarding and this project definitely made me more confident with testing in general.
+I didn't know much about Node.js before starting this project and I have found it to be very lightweight and powerful. Learning new technologies like Node.js, CSS modules, Sass and so on was very rewarding and this project definitely made me more confident with testing in general.
 
 Thank you for reading.
