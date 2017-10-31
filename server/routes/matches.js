@@ -20,10 +20,11 @@ router.get('/', (req, res, next) => {
 
   switch (req.query.hasPhoto) {
     case 'true':
-      req.matches = req.matches.filter(match => match.main_photo !== undefined);
+      req.matches = req.matches.filter(match => match.main_photo);
       break;
     case 'false':
-      return next();
+      req.matches = req.matches.filter(match => !match.main_photo);
+      break;
     default:
       const err = createError(config.ERR_MSG_PARAM_HAS_PHOTO, 400);
       return next(err);
@@ -40,10 +41,11 @@ router.get('/', (req, res, next) => {
   
   switch (req.query.hasExchanged) {
     case 'true':
-      req.matches = req.matches.filter(match => match.contacts_exchanged !== undefined && match.contacts_exchanged > 0);
+      req.matches = req.matches.filter(match => match.contacts_exchanged && match.contacts_exchanged > 0);
       break;
     case 'false':
-      return next();
+      req.matches = req.matches.filter(match => !match.contacts_exchanged && match.contacts_exchanged === 0);
+      break;
     default:
       const err = createError(config.ERR_MSG_PARAM_HAS_EXCHANGED, 400);
       return next(err);
@@ -60,9 +62,11 @@ router.get('/', (req, res, next) => {
 
   switch (req.query.isFavourite) {
     case 'true':
-      req.matches = req.matches.filter(match => match.favourite !== undefined && match.favourite);
+      req.matches = req.matches.filter(match => match.favourite);
+      break;      
     case 'false':
-      return next();
+      req.matches = req.matches.filter(match => !match.favourite);
+      break;
     default:
       const err = createError(config.ERR_MSG_PARAM_IS_FAVOURITE, 400);
       return next(err);
