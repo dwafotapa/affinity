@@ -26,7 +26,7 @@ To run the tests:
 yarn test
 ```
 
-### Client side
+### Client side
 
 Install the npm packages first:
 ```sh
@@ -46,7 +46,7 @@ To run the tests
 yarn test
 ```
 
-## Technology Choices
+## Technology Choices
 
 ### Server side
 
@@ -62,7 +62,7 @@ The difficulties I have encountered were mainly on the frontend with setup up th
 
 Implementing the reusable Slider event handlers was a challenge as some of the Sliders have one or two handles and some of the Sliders have open bounds or don't. I used this React component [https://github.com/davidchin/react-input-range](https://github.com/davidchin/react-input-range) and found a bug because my Slider component was making multiple ajax requests when I drag-and-dropped it. The fix was to read the docs (rtfm...), discover there was an OnChangeComplete event handler and introduce a flag in the state to specifically trigger an ajax request.
 
-## Improvements
+## Improvements
 
 The app and server is running well overall.
 
