@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import config from '../../config';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Main from '../../components/Main/Main';
 import goFetch from '../../utils/fetch';
@@ -36,12 +37,12 @@ class Matches extends Component {
   resetFilters = () => {
     return {
       filters: {
-        compatibilityScoreMin: 0.01,
-        compatibilityScoreMax: 0.99,
-        ageMin: 18,
-        heightMin: 135,
+        compatibilityScoreMin: config.COMPATIBILITY_SCORE_MIN,
+        compatibilityScoreMax: config.COMPATIBILITY_SCORE_MAX,
+        ageMin: config.AGE_MIN,
+        heightMin: config.HEIGHT_MIN,
         distanceMin: 0,
-        distanceMax: 30
+        distanceMax: config.DISTANCE_MIN
       }
     }
   }

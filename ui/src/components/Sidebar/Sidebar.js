@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import InputRange from 'react-input-range';
+import config from '../../config';
 import styles from './Sidebar.css';
 import 'react-input-range/lib/css/index.css';
 
@@ -9,17 +10,17 @@ const formatCompatibilityScoreLabel = (value) => {
 };
 
 const formatAgeLabel = (value) => {
-  const operator = value >= 95 ? '> ' : '';
+  const operator = value >= config.AGE_MAX ? '> ' : '';
   return `${operator}${value}`;
 };
 
 const formatHeightLabel = (value) => {
-  const operator = value >= 210 ? '> ' : '';
+  const operator = value >= config.HEIGHT_MAX ? '> ' : '';
   return `${operator}${value}`;
 };
 
 const formatDistanceLabel = (value) => {
-  const operator = value === 300 ? '>' : '<';
+  const operator = value === config.DISTANCE_MAX ? '>' : '<';
   return `${operator} ${value}`;
 };
 
@@ -85,14 +86,14 @@ class Sidebar extends Component {
                 <div className={styles.SidebarInputRange}>
                   <InputRange
                     formatLabel={value => formatCompatibilityScoreLabel(value)}
-                    minValue={0.01}
-                    maxValue={0.99}
+                    minValue={config.COMPATIBILITY_SCORE_MIN}
+                    maxValue={config.COMPATIBILITY_SCORE_MAX}
                     onChange={value => this.props.handleInputRangeChange('compatibilityScoreMin', 'compatibilityScoreMax', value)}
                     onChangeComplete={value => this.props.handleInputRangeChangeComplete()}
                     step={0.01}
                     value={{
-                      min: filters.compatibilityScoreMin || 0.01,
-                      max: filters.compatibilityScoreMax || 0.99
+                      min: filters.compatibilityScoreMin || config.COMPATIBILITY_SCORE_MIN,
+                      max: filters.compatibilityScoreMax || config.COMPATIBILITY_SCORE_MAX
                     }}
                   />
                 </div>
@@ -102,13 +103,13 @@ class Sidebar extends Component {
                 <div className={styles.SidebarInputRange}>
                   <InputRange
                     formatLabel={value => formatAgeLabel(value)}
-                    minValue={18}
-                    maxValue={95}
+                    minValue={config.AGE_MIN}
+                    maxValue={config.AGE_MAX}
                     onChange={value => this.props.handleInputRangeChange('ageMin', 'ageMax', value)}
-                    onChangeComplete={value => this.props.handleInputRangeWithOpenBoundsChangeComplete('ageMax', 95)}
+                    onChangeComplete={value => this.props.handleInputRangeWithOpenBoundsChangeComplete('ageMax', config.AGE_MAX)}
                     value={{
-                      min: filters.ageMin || 18,
-                      max: filters.ageMax || 95
+                      min: filters.ageMin || config.AGE_MIN,
+                      max: filters.ageMax || config.AGE_MAX
                     }}
                   />
                 </div>
@@ -118,13 +119,13 @@ class Sidebar extends Component {
                 <div className={styles.SidebarInputRange}>
                   <InputRange
                     formatLabel={value => formatHeightLabel(value)}
-                    minValue={135}
-                    maxValue={210}
+                    minValue={config.HEIGHT_MIN}
+                    maxValue={config.HEIGHT_MAX}
                     onChange={value => this.props.handleInputRangeChange('heightMin', 'heightMax', value)}
-                    onChangeComplete={value => this.props.handleInputRangeWithOpenBoundsChangeComplete('heightMax', 210)}                
+                    onChangeComplete={value => this.props.handleInputRangeWithOpenBoundsChangeComplete('heightMax', config.HEIGHT_MAX)}
                     value={{
-                      min: filters.heightMin || 135,
-                      max: filters.heightMax || 210
+                      min: filters.heightMin || config.HEIGHT_MIN,
+                      max: filters.heightMax || config.HEIGHT_MAX
                     }}
                   />
                 </div>
@@ -134,11 +135,11 @@ class Sidebar extends Component {
                 <div className={styles.SidebarInputRange}>
                   <InputRange
                     formatLabel={value => formatDistanceLabel(value)}
-                    minValue={30}
-                    maxValue={300}
+                    minValue={config.DISTANCE_MIN}
+                    maxValue={config.DISTANCE_MAX}
                     onChange={value => this.props.handleInputRangeChange('distanceMin', 'distanceMax', { min: 0, max: value })}
-                    onChangeComplete={value => this.props.handleInputRangeWithOpenBoundsChangeComplete('distanceMax', 300)}
-                    value={filters.distanceMax || 300}
+                    onChangeComplete={value => this.props.handleInputRangeWithOpenBoundsChangeComplete('distanceMax', config.DISTANCE_MAX)}
+                    value={filters.distanceMax || config.DISTANCE_MAX}
                   />
                 </div>
               </div>
