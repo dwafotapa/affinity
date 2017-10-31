@@ -7,7 +7,7 @@ module.exports = {
   HEIGHT_MIN: 135,
   HEIGHT_MAX: 210,
   
-  // error messages
+  // validation
   ERR_MSG_PARAM_HAS_PHOTO: 'hasPhoto must be true or false',
   ERR_MSG_PARAM_HAS_EXCHANGED: 'hasExchanged must be true or false',
   ERR_MSG_PARAM_IS_FAVOURITE: 'isFavourite must be true or false',
