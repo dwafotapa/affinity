@@ -71,7 +71,7 @@ A list of improvements I have thought of:
 - matches should appear as you scroll down when there are more than 10.
 - the reset button shouldn't send an ajax request when the filters are already in their default state.
 - the look & feel and responsive design of the app could be improved.
-- the validation of query parameters could be improved on the server side by using express-validator to validate query params (no sanitization needed, it's done by default by React DOM), checking for negative values and min values greater than max values.
+- the validation of query parameters could be improved on the server side by using [express-validator](https://github.com/ctavan/express-validator) to validate query params (no sanitization needed, it's done by default by React DOM), checking for negative values and min values greater than max values.
 
 ## Wrapping up
 
