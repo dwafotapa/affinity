@@ -54,7 +54,7 @@ class Matches extends Component {
   async componentDidUpdate() {
     const { isLoading, filters } = this.state;
     if (isLoading) {
-      const url = formatUrl('http://localhost:5000/api/matches', filters);
+      const url = formatUrl(`${config.getApiUrl()}matches`, filters);
       const json = await goFetch(url);
       this.setState(prevState => ({
         isLoading: false,
