@@ -1,5 +1,5 @@
 const config = {
-  API_URL: 'http://localhost:5000/api/',
+  API_BASE_URL: 'http://localhost:5000/api/',
   COMPATIBILITY_SCORE_MIN: 0.01,
   COMPATIBILITY_SCORE_MAX: 0.99,
   AGE_MIN: 18,
@@ -10,13 +10,13 @@ const config = {
   DISTANCE_MAX: 300
 };
 
-config.getApiUrl = function() {
+config.getApiBaseUrl = function() {
   switch (process.env.NODE_ENV) {
     case 'production':
-      return process.env.REACT_APP_API_URL;
+      return process.env.REACT_APP_API_BASE_URL;
     case 'development':
     default:
-      return this.API_URL;
+      return this.API_BASE_URL;
   }
 };
 

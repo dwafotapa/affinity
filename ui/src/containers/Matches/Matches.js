@@ -5,13 +5,13 @@ import Main from '../../components/Main/Main';
 import goFetch from '../../utils/fetch';
 import styles from './Matches.css';
 
-const formatUrl = (origin, filters) => {
+const formatUrl = (baseUrl, filters) => {
   let queryString = '';
   for (const prop in filters) {
     queryString += `${prop}=${filters[prop]}&`
   }
   queryString = queryString.slice(0, -1);
-  return `${origin}?${queryString}`;
+  return `${baseUrl}?${queryString}`;
 }
 
 const formatHeight = (height) => {
@@ -54,7 +54,7 @@ class Matches extends Component {
   async componentDidUpdate() {
     const { isLoading, filters } = this.state;
     if (isLoading) {
-      const url = formatUrl(`${config.getApiUrl()}matches`, filters);
+      const url = formatUrl(`${config.getApiBaseUrl()}matches`, filters);
       const json = await goFetch(url);
       this.setState(prevState => ({
         isLoading: false,
