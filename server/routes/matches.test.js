@@ -1,9 +1,9 @@
 const chai = require('chai');
 const expect = require('chai').expect;
 const chaiHttp = require('chai-http');
+const haversine = require('haversine');
 const config = require('../config');
 const server = require('../app');
-const getDistanceFromLatLonInKm = require('../utils/distance');
 
 chai.use(chaiHttp);
 
@@ -196,8 +196,17 @@ describe('GET /api/matches', () => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
       expect(res.body.matches).to.be.an('array');
+      
+      const start = {
+        latitude: user.city.lat,
+        longitude: user.city.lon
+      };
       res.body.matches.forEach(match => {
-        const distance = getDistanceFromLatLonInKm(user.city.lat, user.city.lon, match.city.lat, match.city.lon);
+        const end = {
+          latitude: match.city.lat,
+          longitude: match.city.lon
+        };
+        const distance = haversine(start, end);
         expect(distance).to.be.at.least(300);
       });
       done();
@@ -213,8 +222,17 @@ describe('GET /api/matches', () => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
       expect(res.body.matches).to.be.an('array');
+      
+      const start = {
+        latitude: user.city.lat,
+        longitude: user.city.lon
+      };
       res.body.matches.forEach(match => {
-        const distance = getDistanceFromLatLonInKm(user.city.lat, user.city.lon, match.city.lat, match.city.lon);
+        const end = {
+          latitude: match.city.lat,
+          longitude: match.city.lon
+        };
+        const distance = haversine(start, end);
         expect(distance).to.be.at.most(30);
       });
       done();
@@ -230,8 +248,17 @@ describe('GET /api/matches', () => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
       expect(res.body.matches).to.be.an('array');
+
+      const start = {
+        latitude: user.city.lat,
+        longitude: user.city.lon
+      };
       res.body.matches.forEach(match => {
-        const distance = getDistanceFromLatLonInKm(user.city.lat, user.city.lon, match.city.lat, match.city.lon);
+        const end = {
+          latitude: match.city.lat,
+          longitude: match.city.lon
+        };
+        const distance = haversine(start, end);
         expect(distance).to.be.within(30, 100);
       });
       done();

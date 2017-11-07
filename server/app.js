@@ -22,6 +22,6 @@ app.use('/api/matches', matches);
 app.use('*', error);
 
 // sets the current user to the first user in the matches
-app.set('user', json.matches[0]);  
+app.set('user', json.matches[0]);
 
 module.exports = app;

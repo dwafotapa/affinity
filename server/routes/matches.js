@@ -1,10 +1,10 @@
-require('../utils/Number.prototype');
-const config = require('../config');
 const express = require('express');
+const haversine = require('haversine');
+const config = require('../config');
 const db = require('../database/matches.json');
-const getDistanceFromLatLonInKm = require('../utils/distance');
 const createError = require('../utils/error');
 const router = express.Router();
+require('../utils/Number.prototype');
 
 // inits the matches
 router.get('/', (req, res, next) => {
@@ -184,10 +184,17 @@ router.get('/', (req, res, next) => {
   }
   
   const user = req.app.get('user');
-  req.matches = req.matches.filter(match =>
-    match.city !== undefined
-    && getDistanceFromLatLonInKm(user.city.lat, user.city.lon, match.city.lat, match.city.lon) >= distanceMin
-  );
+  const start = {
+    latitude: user.city.lat,
+    longitude: user.city.lon
+  };
+  req.matches = req.matches.filter(match => {
+    const end = {
+      latitude: match.city.lat,
+      longitude: match.city.lon
+    };
+    return (match.city !== undefined) && (haversine(start, end) >= distanceMin);
+  });
   next();
 });
 
@@ -204,10 +211,17 @@ router.get('/', (req, res, next) => {
   }
   
   const user = req.app.get('user');
-  req.matches = req.matches.filter(match =>
-    match.city !== undefined
-    && getDistanceFromLatLonInKm(user.city.lat, user.city.lon, match.city.lat, match.city.lon) <= distanceMax
-  );
+  const start = {
+    latitude: user.city.lat,
+    longitude: user.city.lon
+  };
+  req.matches = req.matches.filter(match => {
+    const end = {
+      latitude: match.city.lat,
+      longitude: match.city.lon
+    };
+    return (match.city !== undefined) && (haversine(start, end) <= distanceMax);
+  });
   next();
 });
 

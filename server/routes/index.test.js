@@ -2,7 +2,6 @@ const chai = require('chai');
 const expect = require('chai').expect;
 const chaiHttp = require('chai-http');
 const server = require('../app');
-const getDistanceFromLatLonInKm = require('../utils/distance');
 
 chai.use(chaiHttp);
 
