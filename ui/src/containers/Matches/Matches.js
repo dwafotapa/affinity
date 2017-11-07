@@ -3,7 +3,7 @@ import config from '../../config';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Main from '../../components/Main/Main';
 import goFetch from '../../utils/fetch';
-import styles from './Matches.css';
+import styles from './Matches.scss';
 
 const formatUrl = (baseUrl, filters) => {
   let queryString = '';

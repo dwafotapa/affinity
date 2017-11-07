@@ -208,7 +208,7 @@ module.exports = {
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
           {
-            test: /\.css$/,
+            test: /\.(css|scss)$/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
@@ -217,7 +217,7 @@ module.exports = {
                     {
                       loader: require.resolve('css-loader'),
                       options: {
-                        importLoaders: 1,
+                        importLoaders: 2,
                         modules: true,
                         minimize: true,
                         sourceMap: shouldUseSourceMap,
@@ -243,6 +243,7 @@ module.exports = {
                         ],
                       },
                     },
+                    require.resolve('sass-loader'),
                   ],
                 },
                 extractTextPluginOptions

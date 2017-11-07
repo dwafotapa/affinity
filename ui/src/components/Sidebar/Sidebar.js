@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import InputRange from 'react-input-range';
 import config from '../../config';
-import styles from './Sidebar.css';
+import styles from './Sidebar.scss';
 import 'react-input-range/lib/css/index.css';
 
 const formatCompatibilityScoreLabel = (value) => {

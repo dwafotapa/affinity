@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Main.css';
+import styles from './Main.scss';
 
 const Main = (props) => (
   <div className={styles.MainWrapper}>

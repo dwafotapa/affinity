@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './NotFound.css';
+import styles from './NotFound.scss';
 
 const NotFoundPage = () => (
   <div className={styles.NotFound}>

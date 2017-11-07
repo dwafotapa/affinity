@@ -1,11 +1,11 @@
-@import 'globals.scss';
+@import '../../globals.scss';
 
 .MainWrapper {
   flex: 5;
   padding: 10px;
 
   @media #{$medium-only} {
-    flex: 4
+    flex: 4;
   }
 
   .Main {
