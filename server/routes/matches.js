@@ -4,7 +4,7 @@ const config = require('../config');
 const db = require('../database/matches.json');
 const createError = require('../utils/error');
 const router = express.Router();
-require('../utils/Number.prototype');
+const NumberUtils = require('../utils/Number.utils');
 
 // inits the matches
 router.get('/', (req, res, next) => {
@@ -82,7 +82,11 @@ router.get('/', (req, res, next) => {
   }
 
   const compatibilityScoreMin = Number(req.query.compatibilityScoreMin);
-  if (isNaN(compatibilityScoreMin) || compatibilityScoreMin.isOutOfRange(config.COMPATIBILITY_SCORE_MIN, config.COMPATIBILITY_SCORE_MAX)) {
+  const range = {
+    min: config.COMPATIBILITY_SCORE_MIN,
+    max: config.COMPATIBILITY_SCORE_MAX
+  };
+  if (isNaN(compatibilityScoreMin) || NumberUtils.isOutOfRange(compatibilityScoreMin, range)) {
     const err = createError(config.ERR_MSG_PARAM_COMPATIBILITY_SCORE_MIN, 400);
     return next(err);
   }
@@ -98,7 +102,11 @@ router.get('/', (req, res, next) => {
   }
 
   const compatibilityScoreMax = Number(req.query.compatibilityScoreMax);
-  if (isNaN(compatibilityScoreMax) || compatibilityScoreMax.isOutOfRange(config.COMPATIBILITY_SCORE_MIN, config.COMPATIBILITY_SCORE_MAX)) {
+  const range = {
+    min: config.COMPATIBILITY_SCORE_MIN,
+    max: config.COMPATIBILITY_SCORE_MAX
+  };
+  if (isNaN(compatibilityScoreMax) || NumberUtils.isOutOfRange(compatibilityScoreMax, range)) {
     const err = createError(config.ERR_MSG_PARAM_COMPATIBILITY_SCORE_MAX, 400);
     return next(err);
   }
@@ -114,7 +122,11 @@ router.get('/', (req, res, next) => {
   }
 
   const ageMin = Number(req.query.ageMin);
-  if (isNaN(ageMin) || ageMin.isOutOfRange(config.AGE_MIN, config.AGE_MAX)) {
+  const range = {
+    min: config.AGE_MIN,
+    max: config.AGE_MAX
+  };
+  if (isNaN(ageMin) || NumberUtils.isOutOfRange(ageMin, range)) {
     const err = createError(config.ERR_MSG_PARAM_AGE_MIN, 400);
     return next(err);
   }
@@ -130,7 +142,11 @@ router.get('/', (req, res, next) => {
   }
 
   const ageMax = Number(req.query.ageMax);
-  if (isNaN(ageMax) || ageMax.isOutOfRange(config.AGE_MIN, config.AGE_MAX)) {
+  const range = {
+    min: config.AGE_MIN,
+    max: config.AGE_MAX
+  };
+  if (isNaN(ageMax) || NumberUtils.isOutOfRange(ageMax, range)) {
     const err = createError(config.ERR_MSG_PARAM_AGE_MAX, 400);
     return next(err);
   }
@@ -146,7 +162,11 @@ router.get('/', (req, res, next) => {
   }
 
   const heightMin = Number(req.query.heightMin);
-  if (isNaN(heightMin) || heightMin.isOutOfRange(config.HEIGHT_MIN, config.HEIGHT_MAX)) {
+  const range = {
+    min: config.HEIGHT_MIN,
+    max: config.HEIGHT_MAX
+  };
+  if (isNaN(heightMin) || NumberUtils.isOutOfRange(heightMin, range)) {
     const err = createError(config.ERR_MSG_PARAM_HEIGHT_MIN, 400);
     return next(err);
   }
@@ -162,7 +182,11 @@ router.get('/', (req, res, next) => {
   }
 
   const heightMax = Number(req.query.heightMax);
-  if (isNaN(heightMax) || heightMax.isOutOfRange(config.HEIGHT_MIN, config.HEIGHT_MAX)) {
+  const range = {
+    min: config.HEIGHT_MIN,
+    max: config.HEIGHT_MAX
+  };
+  if (isNaN(heightMax) || NumberUtils.isOutOfRange(heightMax, range)) {
     const err = createError(config.ERR_MSG_PARAM_HEIGHT_MAX, 400);
     return next(err);
   }
