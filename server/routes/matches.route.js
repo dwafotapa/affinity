@@ -1,6 +1,5 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator/check');
-const { matchedData, sanitize } = require('express-validator/filter');
 const db = require('../database/matches.json');
 const service = require('../services/matches.service');
 

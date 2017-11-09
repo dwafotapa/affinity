@@ -6,7 +6,7 @@ const config = require('../config');
 const service = require('./matches.service');
 
 describe('matches.service.js', () => {
-  describe('service.filter', () => {
+  describe('filter', () => {
     const req = {
       app: {
         user: {
