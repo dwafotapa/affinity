@@ -1,5 +1,5 @@
 module.exports = {
-  // mappings query parameters / matches' properties
+  // query parameters to matches' properties mappings
   hasPhoto: 'main_photo',
   hasExchanged: 'contacts_exchanged',
   isFavourite: 'favourite',
@@ -10,13 +10,5 @@ module.exports = {
   heightMin: 'height_in_cm',
   heightMax: 'height_in_cm',
   distanceMin: '',
-  distanceMax: '',
-
-  // range values
-  COMPATIBILITY_SCORE_MIN: 0.01,
-  COMPATIBILITY_SCORE_MAX: 0.99,
-  AGE_MIN: 18,
-  AGE_MAX: 95,
-  HEIGHT_MIN: 135,
-  HEIGHT_MAX: 210
+  distanceMax: ''
 };
