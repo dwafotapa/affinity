@@ -1,9 +1,9 @@
 const express = require('express');
 const morgan = require('morgan');
-const index = require('./routes/index');
-const matches = require('./routes/matches');
-const error = require('./routes/error');
-const json = require('./database/matches.json');
+const indexRoute = require('./routes/index.route');
+const matchesRoute = require('./routes/matches.route');
+const errorRoute = require('./routes/error.route');
+const db = require('./database/matches.json');
 
 const app = express();
 
@@ -17,11 +17,11 @@ app.use((req, res, next) => {
 });
 
 // routing middleware
-app.use('/api', index);
-app.use('/api/matches', matches);
-app.use('*', error);
+app.use('/api', indexRoute);
+app.use('/api/matches', matchesRoute);
+app.use('*', errorRoute);
 
 // sets the current user to the first user in the matches
-app.set('user', json.matches[0]);
+app.set('user', db.matches[0]);
 
 module.exports = app;

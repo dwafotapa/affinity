@@ -265,257 +265,123 @@ describe('GET /api/matches', () => {
     });
   });
 
-  it('should get a 404 json object if hasPhoto is neither true nor false', (done) => {
+  it('should get a json { errors } object if hasPhoto is neither true nor false', (done) => {
     chai.request(server)
     .get('/api/matches?hasPhoto=neithertruenorfalse')
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
-      expect(res.body.error).to.be.an('object');
-      expect(res.body.error).to.eql({
-        status: 400,
-        message: config.ERR_MSG_PARAM_HAS_PHOTO
-      });
+      expect(res.body.errors).to.have.property('hasPhoto');
       done();
     });
   });
 
-  it('should get a 404 json object if hasExchanged is neither true nor false', (done) => {
+  it('should get a json { errors } object if hasExchanged is neither true nor false', (done) => {
     chai.request(server)
     .get('/api/matches?hasExchanged=neithertruenorfalse')
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
-      expect(res.body.error).to.be.an('object');
-      expect(res.body.error).to.eql({
-        status: 400,
-        message: config.ERR_MSG_PARAM_HAS_EXCHANGED
-      });
+      expect(res.body.errors).to.have.property('hasExchanged');
       done();
     });
   });
 
-  it('should get a 404 json object if isFavourite is neither true nor false', (done) => {
+  it('should get a json { errors } object if isFavourite is neither true nor false', (done) => {
     chai.request(server)
     .get('/api/matches?isFavourite=neithertruenorfalse')
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
-      expect(res.body.error).to.be.an('object');
-      expect(res.body.error).to.eql({
-        status: 400,
-        message: config.ERR_MSG_PARAM_IS_FAVOURITE
-      });
+      expect(res.body.errors).to.have.property('isFavourite');
       done();
     });
   });
 
-  it('should get a 404 json object if compatibilityScoreMin is not a number', (done) => {
+  it('should get a json { errors } object if compatibilityScoreMin is not a number', (done) => {
     chai.request(server)
     .get('/api/matches?compatibilityScoreMin=now')
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
-      expect(res.body.error).to.be.an('object');
-      expect(res.body.error).to.eql({
-        status: 400,
-        message: config.ERR_MSG_PARAM_COMPATIBILITY_SCORE_MIN
-      });
+      expect(res.body.errors).to.have.property('compatibilityScoreMin');
       done();
     });
   });
 
-  it('should get a 404 json object if compatibilityScoreMin is a number out of range', (done) => {
-    chai.request(server)
-    .get('/api/matches?compatibilityScoreMin=5')
-    .end((err, res) => {
-      expect(res).to.have.status(400);
-      expect(res).to.be.json;
-      expect(res.body.error).to.be.an('object');
-      expect(res.body.error).to.eql({
-        status: 400,
-        message: config.ERR_MSG_PARAM_COMPATIBILITY_SCORE_MIN
-      });
-      done();
-    });
-  });
-
-  it('should get a 404 json object if compatibilityScoreMax is not a number', (done) => {
+  it('should get a json { errors } object if compatibilityScoreMax is not a number', (done) => {
     chai.request(server)
     .get('/api/matches?compatibilityScoreMax=tomorrow')
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
-      expect(res.body.error).to.be.an('object');
-      expect(res.body.error).to.eql({
-        status: 400,
-        message: config.ERR_MSG_PARAM_COMPATIBILITY_SCORE_MAX
-      });
+      expect(res.body.errors).to.have.property('compatibilityScoreMax');
       done();
     });
   });
 
-  it('should get a 404 json object if compatibilityScoreMax is a number out of range', (done) => {
-    chai.request(server)
-    .get('/api/matches?compatibilityScoreMax=10')
-    .end((err, res) => {
-      expect(res).to.have.status(400);
-      expect(res).to.be.json;
-      expect(res.body.error).to.be.an('object');
-      expect(res.body.error).to.eql({
-        status: 400,
-        message: config.ERR_MSG_PARAM_COMPATIBILITY_SCORE_MAX
-      });
-      done();
-    });
-  });
-
-  it('should get a 404 json object if ageMin is not a number', (done) => {
+  it('should get a json { errors } object if ageMin is not a number', (done) => {
     chai.request(server)
     .get('/api/matches?ageMin=yesterday')
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
-      expect(res.body.error).to.be.an('object');
-      expect(res.body.error).to.eql({
-        status: 400,
-        message: config.ERR_MSG_PARAM_AGE_MIN
-      });
+      expect(res.body.errors).to.have.property('ageMin');
       done();
     });
   });
 
-  it('should get a 404 json object if ageMin is a number out of range', (done) => {
-    chai.request(server)
-    .get('/api/matches?ageMin=17')
-    .end((err, res) => {
-      expect(res).to.have.status(400);
-      expect(res).to.be.json;
-      expect(res.body.error).to.be.an('object');
-      expect(res.body.error).to.eql({
-        status: 400,
-        message: config.ERR_MSG_PARAM_AGE_MIN
-      });
-      done();
-    });
-  });
-
-  it('should get a 404 json object if ageMax is not a number', (done) => {
+  it('should get a json { errors } object if ageMax is not a number', (done) => {
     chai.request(server)
     .get('/api/matches?ageMax=notanumber')
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
-      expect(res.body.error).to.be.an('object');
-      expect(res.body.error).to.eql({
-        status: 400,
-        message: config.ERR_MSG_PARAM_AGE_MAX
-      });
+      expect(res.body.errors).to.have.property('ageMax');
       done();
     });
   });
 
-  it('should get a 404 json object if ageMax is a number out of range', (done) => {
-    chai.request(server)
-    .get('/api/matches?ageMax=100')
-    .end((err, res) => {
-      expect(res).to.have.status(400);
-      expect(res).to.be.json;
-      expect(res.body.error).to.be.an('object');
-      expect(res.body.error).to.eql({
-        status: 400,
-        message: config.ERR_MSG_PARAM_AGE_MAX
-      });
-      done();
-    });
-  });
-
-  it('should get a 404 json object if heightMin is not a number', (done) => {
+  it('should get a json { errors } object if heightMin is not a number', (done) => {
     chai.request(server)
     .get('/api/matches?heightMin=stillnotanumber')
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
-      expect(res.body.error).to.be.an('object');
-      expect(res.body.error).to.eql({
-        status: 400,
-        message: config.ERR_MSG_PARAM_HEIGHT_MIN
-      });
+      expect(res.body.errors).to.have.property('heightMin');
       done();
     });
   });
 
-  it('should get a 404 json object if heightMin is a number out of range', (done) => {
-    chai.request(server)
-    .get('/api/matches?heightMin=300')
-    .end((err, res) => {
-      expect(res).to.have.status(400);
-      expect(res).to.be.json;
-      expect(res.body.error).to.be.an('object');
-      expect(res.body.error).to.eql({
-        status: 400,
-        message: config.ERR_MSG_PARAM_HEIGHT_MIN
-      });
-      done();
-    });
-  });
-
-  it('should get a 404 json object if heightMax is not a number', (done) => {
+  it('should get a json { errors } object if heightMax is not a number', (done) => {
     chai.request(server)
     .get('/api/matches?heightMax=notanumber')
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
-      expect(res.body.error).to.be.an('object');
-      expect(res.body.error).to.eql({
-        status: 400,
-        message: config.ERR_MSG_PARAM_HEIGHT_MAX
-      });
+      expect(res.body.errors).to.have.property('heightMax');
       done();
     });
   });
 
-  it('should get a 404 json object if heightMax is a number out of range', (done) => {
-    chai.request(server)
-    .get('/api/matches?heightMax=112')
-    .end((err, res) => {
-      expect(res).to.have.status(400);
-      expect(res).to.be.json;
-      expect(res.body.error).to.be.an('object');
-      expect(res.body.error).to.eql({
-        status: 400,
-        message: config.ERR_MSG_PARAM_HEIGHT_MAX
-      });
-      done();
-    });
-  });
-
-  it('should get a 404 json object if distanceMin is not a number', (done) => {
+  it('should get a json { errors } object if distanceMin is not a number', (done) => {
     chai.request(server)
     .get('/api/matches?distanceMin=veryfar')
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
-      expect(res.body.error).to.be.an('object');
-      expect(res.body.error).to.eql({
-        status: 400,
-        message: config.ERR_MSG_PARAM_DISTANCE_MIN
-      });
+      expect(res.body.errors).to.have.property('distanceMin');
       done();
     });
   });
 
-  it('should get a 404 json object if distanceMax is not a number', (done) => {
+  it('should get a json { errors } object if distanceMax is not a number', (done) => {
     chai.request(server)
     .get('/api/matches?distanceMax=farfaraway')
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
-      expect(res.body.error).to.be.an('object');
-      expect(res.body.error).to.eql({
-        status: 400,
-        message: config.ERR_MSG_PARAM_DISTANCE_MAX
-      });
+      expect(res.body.errors).to.have.property('distanceMax');
       done();
     });
   });
