@@ -46,9 +46,11 @@ service.filter = function(req) {
         });
         continue;
       case 'compatibilityScoreMin':
+        matches = matches.filter(match => match[matchProp] !== undefined && match[matchProp] >= parseFloat(query[queryProp]));
+        continue;
       case 'ageMin':
       case 'heightMin':
-        matches = matches.filter(match => match[matchProp] !== undefined && match[matchProp] >= parseFloat(query[queryProp]));
+        matches = matches.filter(match => match[matchProp] !== undefined && match[matchProp] >= parseInt(query[queryProp]));
         continue;
       case 'distanceMin':
         matches = matches.filter(match => {
@@ -60,6 +62,8 @@ service.filter = function(req) {
         });
         continue;
       case 'compatibilityScoreMax':
+        matches = matches.filter(match => match[matchProp] !== undefined && match[matchProp] <= parseFloat(query[queryProp]));
+        continue;
       case 'ageMax':
       case 'heightMax':
         matches = matches.filter(match => match[matchProp] !== undefined && match[matchProp] <= parseInt(query[queryProp]));
@@ -70,7 +74,7 @@ service.filter = function(req) {
             latitude: match.city.lat,
             longitude: match.city.lon
           };
-          return (match.city !== undefined) && (haversine(start, end) <= parseInt(query[queryProp]));
+          return (match.city !== undefined) && (haversine(start, end) <= parseFloat(query[queryProp]));
         });
     }
   }
