@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './NotFound.scss';
 
-const NotFoundPage = () => (
+const NotFound = () => (
   <div className={styles.NotFound}>
     <h1>Oops!</h1>
     <div>Looks like you're lost...</div>
@@ -11,4 +11,4 @@ const NotFoundPage = () => (
   </div>
 );
 
-export default NotFoundPage;
+export default NotFound;

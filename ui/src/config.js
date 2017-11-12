@@ -1,5 +1,6 @@
 const config = {
-  API_BASE_URL: 'http://localhost:5000/api/',
+  API_URL_BASE: 'http://localhost:5000/api/',
+  API_URL_MATCHES: 'http://localhost:5000/api/matches',
   COMPATIBILITY_SCORE_MIN: 0.01,
   COMPATIBILITY_SCORE_MAX: 0.99,
   AGE_MIN: 18,
@@ -13,10 +14,20 @@ const config = {
 config.getApiBaseUrl = function() {
   switch (process.env.NODE_ENV) {
     case 'production':
-      return process.env.REACT_APP_API_BASE_URL;
+      return process.env.REACT_APP_API_URL_BASE;
     case 'development':
     default:
-      return this.API_BASE_URL;
+      return this.API_URL_BASE;
+  }
+};
+
+config.getApiMatchesUrl = function() {
+  switch (process.env.NODE_ENV) {
+    case 'production':
+      return process.env.REACT_APP_API_URL_MATCHES;
+    case 'development':
+    default:
+      return this.API_URL_MATCHES;
   }
 };
 

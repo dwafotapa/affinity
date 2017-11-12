@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import config from '../../config';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Main from '../../components/Main/Main';
-import goFetch from '../../utils/fetch';
+import {
+  fetchMatches,
+  setFilter,
+  removeFilter,
+  resetFilters
+} from '../../actions';
 import styles from './Matches.scss';
-
-const formatUrl = (baseUrl, filters) => {
-  let queryString = '';
-  for (const prop in filters) {
-    queryString += `${prop}=${filters[prop]}&`
-  }
-  queryString = queryString.slice(0, -1);
-  return `${baseUrl}?${queryString}`;
-}
 
 const formatHeight = (height) => {
   return `${height}cm`;
@@ -22,111 +19,72 @@ const formatCompatibilityScore = (compatibilityScore) => {
   return `${compatibilityScore * 100}%`;
 }
 
-class Matches extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: false,
-      ...this.resetFilters(),
-      entities: {
-        matches: []
-      },
-    }
+export const getDefaultFilters = () => {
+  return {
+    compatibilityScoreMin: config.COMPATIBILITY_SCORE_MIN,
+    compatibilityScoreMax: config.COMPATIBILITY_SCORE_MAX,
+    ageMin: config.AGE_MIN,
+    heightMin: config.HEIGHT_MIN,
+    distanceMin: 0,
+    distanceMax: config.DISTANCE_MIN
   }
+}
 
-  resetFilters = () => {
-    return {
-      filters: {
-        compatibilityScoreMin: config.COMPATIBILITY_SCORE_MIN,
-        compatibilityScoreMax: config.COMPATIBILITY_SCORE_MAX,
-        ageMin: config.AGE_MIN,
-        heightMin: config.HEIGHT_MIN,
-        distanceMin: 0,
-        distanceMax: config.DISTANCE_MIN
-      }
-    }
-  }
-
+export class Matches extends Component {
   componentDidMount() {
-    this.setState({ isLoading: true });
+    const { dispatch, filters } = this.props;
+    dispatch(fetchMatches(filters));
   }
 
-  async componentDidUpdate() {
-    const { isLoading, filters } = this.state;
-    if (isLoading) {
-      const url = formatUrl(`${config.getApiBaseUrl()}matches`, filters);
-      const json = await goFetch(url);
-      this.setState(prevState => ({
-        isLoading: false,
-        entities: {
-          ...prevState.entities,
-          matches: json.matches || []
-        }
-      }));
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.filters !== this.props.filters && nextProps.isFetching) {
+      const { dispatch, filters } = nextProps;
+      dispatch(fetchMatches(filters));
     }
   }
   
   handleCheckboxChange = (e) => {
     const { name, checked } = e.target;
     if (checked) {
-      this.setState(prevState => ({
-        isLoading: true,
-        filters: {
-          ...prevState.filters,
-          [name]: checked
-        }
-      }));
+      this.props.dispatch(setFilter(name, checked, true));
     } else {
-      this.setState(prevState => {
-        const filters = { ...prevState.filters };
-        delete filters[name];
-        return {
-          isLoading: true,
-          filters
-        }
-      });
+      this.props.dispatch(removeFilter(name, true));
     }
   }
 
   handleInputRangeChange = (nameMin, nameMax, value) => {
-    this.setState(prevState => ({
-      filters: {
-        ...prevState.filters,
-        [nameMin]: value.min,
-        [nameMax]: value.max
-      }
-    }));
+    const { min, max } = value;
+    const { dispatch, filters } = this.props;
+    if (min !== filters[nameMin]) {
+      dispatch(setFilter(nameMin, min, false));
+    }
+    if (max !== filters[nameMax]) {
+      dispatch(setFilter(nameMax, max, false));
+    }
   }
 
   handleInputRangeChangeComplete = () => {
-    this.setState({ isLoading: true });
+    const { dispatch, filters } = this.props;
+    dispatch(fetchMatches(filters));
   }
 
   handleInputRangeWithOpenBoundsChangeComplete = (name, boundValue) => {
-    this.setState(prevState => {
-      let filters = { ...prevState.filters };
-      if (filters[name] === boundValue) {
-        delete filters[name];
-      }
-      return {
-        isLoading: true,
-        filters
-      };
-    });
+    const { dispatch, filters } = this.props;
+    if (filters[name] === boundValue) {
+      dispatch(removeFilter(name));
+    } else {
+      dispatch(fetchMatches(filters));
+    }
   }
   
   handleResetButtonClick = (e) => {
     e.preventDefault();
-    this.setState({
-      isLoading: true,
-      ...this.resetFilters()
-    });
+    this.props.dispatch(resetFilters(getDefaultFilters()));
   }
 
   renderMatches = () => {
-    const { isLoading } = this.state;
-    const { matches } = this.state.entities;
-    if (isLoading) {
+    const { isFetching, matches } = this.props;
+    if (isFetching) {
       return <div>Loading...</div>;
     }
 
@@ -149,10 +107,11 @@ class Matches extends Component {
   }
 
   render() {
+    const { filters } = this.props;
     return (
       <div className={styles.Matches}>
         <Sidebar
-          filters={this.state.filters}
+          filters={filters}
           handleCheckboxChange={this.handleCheckboxChange}
           handleInputRangeChange={this.handleInputRangeChange}
           handleInputRangeChangeComplete={this.handleInputRangeChangeComplete}
@@ -168,4 +127,12 @@ class Matches extends Component {
   }
 };
 
-export default Matches;
+const mapStateToProps = (state) => {
+  return {
+    isFetching: state.isFetching || false,
+    filters: state.filters || getDefaultFilters(),
+    matches: state.matches || []
+  };
+}
+
+export default connect(mapStateToProps)(Matches);

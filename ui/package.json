@@ -36,7 +36,11 @@
     "react-dev-utils": "^4.1.0",
     "react-dom": "^16.0.0",
     "react-input-range": "^1.2.1",
+    "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
     "style-loader": "0.18.2",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.5.9",
@@ -101,6 +105,7 @@
     "expect": "^21.2.1",
     "node-sass": "^4.5.3",
     "react-test-renderer": "^16.0.0",
+    "redux-devtools": "^3.4.0",
     "sass-loader": "^6.0.6",
     "sinon": "^4.0.2"
   }

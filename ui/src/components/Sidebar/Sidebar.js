@@ -27,18 +27,23 @@ const formatDistanceLabel = (value) => {
 class Sidebar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isExpanded: true
-    };
+    this.state = { isCollapsed: false };
   }
 
   handleToggleLinkClick = (e) => {
-    this.setState(prevState => ({ isExpanded: !prevState.isExpanded }));
+    this.setState(prevState => ({ isCollapsed: !prevState.isCollapsed }));
   }
 
   render() {
-    const { filters } = this.props;
-    const toggleLinkText = this.state.isExpanded ? 'Less' : 'More';
+    const {
+      filters,
+      handleCheckboxChange,
+      handleInputRangeChange,
+      handleInputRangeChangeComplete,
+      handleInputRangeWithOpenBoundsChangeComplete,
+      handleResetButtonClick
+    } = this.props;
+    const toggleLinkText = this.state.isCollapsed ? 'More' : 'Less';
     return (
       <div className={styles.SidebarWrapper}>
         <form className={styles.Sidebar}>
@@ -46,7 +51,7 @@ class Sidebar extends Component {
             Filters
             <span className={styles.SidebarToggleLink} onClick={this.handleToggleLinkClick}>{toggleLinkText}</span>
           </div>
-          {this.state.isExpanded &&
+          {!this.state.isCollapsed &&
             <div className={styles.SidebarBody}>
               <div className={styles.SidebarRow}>
                 <input
@@ -54,7 +59,7 @@ class Sidebar extends Component {
                   name="hasPhoto"
                   type="checkbox"
                   checked={filters.hasPhoto || false}
-                  onChange={this.props.handleCheckboxChange}
+                  onChange={handleCheckboxChange}
                 />
                 <span> </span>
                 <label htmlFor="hasPhoto">Has photo</label>
@@ -65,7 +70,7 @@ class Sidebar extends Component {
                   name="hasExchanged"
                   type="checkbox"
                   checked={filters.hasExchanged || false}
-                  onChange={this.props.handleCheckboxChange}
+                  onChange={handleCheckboxChange}
                 />
                 <span> </span>
                 <label htmlFor="hasExchanged">In contact</label>
@@ -76,7 +81,7 @@ class Sidebar extends Component {
                   name="isFavourite"
                   type="checkbox"
                   checked={filters.isFavourite || false}
-                  onChange={this.props.handleCheckboxChange}
+                  onChange={handleCheckboxChange}
                 />
                 <span> </span>
                 <label htmlFor="isFavourite">Favourite</label>
@@ -88,8 +93,8 @@ class Sidebar extends Component {
                     formatLabel={value => formatCompatibilityScoreLabel(value)}
                     minValue={config.COMPATIBILITY_SCORE_MIN}
                     maxValue={config.COMPATIBILITY_SCORE_MAX}
-                    onChange={value => this.props.handleInputRangeChange('compatibilityScoreMin', 'compatibilityScoreMax', value)}
-                    onChangeComplete={value => this.props.handleInputRangeChangeComplete()}
+                    onChange={value => handleInputRangeChange('compatibilityScoreMin', 'compatibilityScoreMax', value)}
+                    onChangeComplete={value => handleInputRangeChangeComplete()}
                     step={0.01}
                     value={{
                       min: filters.compatibilityScoreMin || config.COMPATIBILITY_SCORE_MIN,
@@ -105,8 +110,8 @@ class Sidebar extends Component {
                     formatLabel={value => formatAgeLabel(value)}
                     minValue={config.AGE_MIN}
                     maxValue={config.AGE_MAX}
-                    onChange={value => this.props.handleInputRangeChange('ageMin', 'ageMax', value)}
-                    onChangeComplete={value => this.props.handleInputRangeWithOpenBoundsChangeComplete('ageMax', config.AGE_MAX)}
+                    onChange={value => handleInputRangeChange('ageMin', 'ageMax', value)}
+                    onChangeComplete={value => handleInputRangeWithOpenBoundsChangeComplete('ageMax', config.AGE_MAX)}
                     value={{
                       min: filters.ageMin || config.AGE_MIN,
                       max: filters.ageMax || config.AGE_MAX
@@ -121,8 +126,8 @@ class Sidebar extends Component {
                     formatLabel={value => formatHeightLabel(value)}
                     minValue={config.HEIGHT_MIN}
                     maxValue={config.HEIGHT_MAX}
-                    onChange={value => this.props.handleInputRangeChange('heightMin', 'heightMax', value)}
-                    onChangeComplete={value => this.props.handleInputRangeWithOpenBoundsChangeComplete('heightMax', config.HEIGHT_MAX)}
+                    onChange={value => handleInputRangeChange('heightMin', 'heightMax', value)}
+                    onChangeComplete={value => handleInputRangeWithOpenBoundsChangeComplete('heightMax', config.HEIGHT_MAX)}
                     value={{
                       min: filters.heightMin || config.HEIGHT_MIN,
                       max: filters.heightMax || config.HEIGHT_MAX
@@ -137,15 +142,15 @@ class Sidebar extends Component {
                     formatLabel={value => formatDistanceLabel(value)}
                     minValue={config.DISTANCE_MIN}
                     maxValue={config.DISTANCE_MAX}
-                    onChange={value => this.props.handleInputRangeChange('distanceMin', 'distanceMax', { min: 0, max: value })}
-                    onChangeComplete={value => this.props.handleInputRangeWithOpenBoundsChangeComplete('distanceMax', config.DISTANCE_MAX)}
+                    onChange={value => handleInputRangeChange('distanceMin', 'distanceMax', { min: 0, max: value })}
+                    onChangeComplete={value => handleInputRangeWithOpenBoundsChangeComplete('distanceMax', config.DISTANCE_MAX)}
                     value={filters.distanceMax || config.DISTANCE_MAX}
                   />
                 </div>
               </div>
               <div className={styles.SidebarRow}>
                 <div className={styles.SidebarResetButton}>
-                  <button onClick={this.props.handleResetButtonClick}>Reset</button>
+                  <button onClick={handleResetButtonClick}>Reset</button>
                 </div>
               </div>
             </div>
