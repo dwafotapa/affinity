@@ -26,7 +26,7 @@ const filters = (state = getDefaultFilters(), action) => {
       delete filters[action.filter];
       return filters;
     case RESET_FILTERS:
-      return action.filters;
+      return getDefaultFilters();
     default:
       return state;
   }

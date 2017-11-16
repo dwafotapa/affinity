@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import InputRange from 'react-input-range';
 import config from '../../config';
-import { getDefaultFilters } from './reducers';
 import styles from './Sidebar.scss';
 import 'react-input-range/lib/css/index.css';
 
@@ -32,6 +31,10 @@ class Sidebar extends Component {
       isCollapsed: false,
       filters: props.filters // local state for dragging and updating the sliders
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ filters: nextProps.filters });
   }
 
   handleToggleLinkClick = (e) => {
@@ -82,10 +85,7 @@ class Sidebar extends Component {
   
   handleResetButtonClick = (e) => {
     e.preventDefault();
-    this.setState((prevState) => {
-      this.props.resetFilters(getDefaultFilters());
-      return { filters: getDefaultFilters() };
-    });
+    this.props.resetFilters();
   }
 
   render() {

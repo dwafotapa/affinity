@@ -17,9 +17,8 @@ export const removeFilter = (filter) => {
   }
 }
 
-export const resetFilters = (filters) => {
+export const resetFilters = () => {
   return {
-    type: RESET_FILTERS,
-    filters
+    type: RESET_FILTERS
   }
 }
