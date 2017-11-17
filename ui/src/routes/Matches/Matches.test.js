@@ -1,21 +1,21 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { Matches, getDefaultFilters } from './Matches';
-import Sidebar from '../../components/Sidebar/Sidebar';
+import { Matches } from './Matches';
+import SidebarContainer from '../../components/Sidebar/SidebarContainer';
 import Main from '../../components/Main/Main';
 
 const props = () => ({
   isFetching: false,
-  filters: getDefaultFilters(),
-  matches: [],
-  dispatch: jest.fn()
+  items: [],
+  filters: {},
+  fetchMatches: jest.fn()
 });
 
 describe('Matches', () => {
-  it('renders a <Sidebar/> component and a <Main/> component', () => {
+  it('renders a <SidebarContainer/> component and a <Main/> component', () => {
     const wrapper = shallow(<Matches {...props()}/>);
 
-    expect(wrapper.find(Sidebar)).toHaveLength(1);
+    expect(wrapper.find(SidebarContainer)).toHaveLength(1);
     expect(wrapper.find(Main)).toHaveLength(1);
   });
 });

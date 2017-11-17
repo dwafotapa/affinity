@@ -5,13 +5,13 @@ import goFetch from '../../utils/fetch';
 export const REQUEST_MATCHES = 'REQUEST_MATCHES';
 export const RECEIVE_MATCHES = 'RECEIVE_MATCHES';
 
-export const requestMatches = () => {
+const requestMatches = () => {
   return {
     type: REQUEST_MATCHES
   };
 };
 
-export const receiveMatches = (matches) => {
+const receiveMatches = (matches) => {
   return {
     type: RECEIVE_MATCHES,
     items: matches

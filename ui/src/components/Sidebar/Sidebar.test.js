@@ -6,11 +6,9 @@ import InputRange from 'react-input-range';
 const setup = () => (
   <Sidebar
     filters={{}}
-    handleCheckboxChange={() => {}}
-    handleInputRangeChange={() => {}}
-    handleInputRangeChangeComplete={() => {}}
-    handleInputRangeWithOpenBoundsChangeComplete={() => {}}
-    handleResetButtonClick={() => {}}
+    setFilter={() => {}}
+    removeFilter={() => {}}
+    resetFilters={() => {}}
   />
 );
 
