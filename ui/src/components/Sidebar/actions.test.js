@@ -10,7 +10,9 @@ describe('Sidebar/actions', () => {
       value
     };
 
-    expect(actions.setFilter(filter, value)).toEqual(expectedAction);
+    const action = actions.setFilter(filter, value);
+
+    expect(action).toEqual(expectedAction);
   });
 
   it('should create a REMOVE_FILTER action to remove a filter', () => {
@@ -20,7 +22,9 @@ describe('Sidebar/actions', () => {
       filter
     };
 
-    expect(actions.removeFilter(filter)).toEqual(expectedAction);
+    const action = actions.removeFilter(filter);
+
+    expect(action).toEqual(expectedAction);
   });
 
   it('should create a RESET_FILTERS action to reset to default filters', () => {
@@ -28,6 +32,8 @@ describe('Sidebar/actions', () => {
       type: actions.RESET_FILTERS
     };
 
-    expect(actions.resetFilters()).toEqual(expectedAction);
+    const action = actions.resetFilters();
+
+    expect(action).toEqual(expectedAction);
   });
-})
+});
