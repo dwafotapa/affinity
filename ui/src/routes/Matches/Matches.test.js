@@ -6,8 +6,9 @@ import Main from '../../components/Main/Main';
 
 const props = () => ({
   isFetching: false,
-  items: [],
+  hasFetchFailed: false,
   filters: {},
+  items: [],
   fetchMatches: jest.fn()
 });
 

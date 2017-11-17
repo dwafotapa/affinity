@@ -24,9 +24,13 @@ export class Matches extends Component {
   }
 
   renderMatches = () => {
-    const { isFetching, items } = this.props;
+    const { isFetching, hasFetchFailed, items } = this.props;
     if (isFetching) {
       return <div>Loading...</div>;
+    }
+
+    if (hasFetchFailed) {
+      return <div>Failed to fetch data. Please reload the page.</div>;
     }
 
     if (items.length === 0) {
@@ -62,8 +66,9 @@ export class Matches extends Component {
 
 Matches.propTypes = {
   isFetching: PropTypes.bool.isRequired,
-  items: PropTypes.array.isRequired,
+  hasFetchFailed: PropTypes.bool.isRequired,
   filters: PropTypes.object.isRequired,
+  items: PropTypes.array.isRequired,
   fetchMatches: PropTypes.func.isRequired
 };
 

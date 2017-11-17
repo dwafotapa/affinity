@@ -1,29 +1,42 @@
 import { stringify } from 'qs';
 import config from '../../config';
-import goFetch from '../../utils/fetch';
+import { handleErrors } from '../../utils/fetch';
 
-export const REQUEST_MATCHES = 'REQUEST_MATCHES';
-export const RECEIVE_MATCHES = 'RECEIVE_MATCHES';
+export const FETCH_MATCHES_REQUEST = 'FETCH_MATCHES_REQUEST';
+export const FETCH_MATCHES_SUCCESS = 'FETCH_MATCHES_SUCCESS';
+export const FETCH_MATCHES_FAILURE = 'FETCH_MATCHES_FAILURE';
 
-const requestMatches = () => {
+const fetchMatchesRequest = () => {
   return {
-    type: REQUEST_MATCHES
+    type: FETCH_MATCHES_REQUEST
   };
 };
 
-const receiveMatches = (matches) => {
+const fetchMatchesSuccess = (matches) => {
   return {
-    type: RECEIVE_MATCHES,
-    items: matches
+    type: FETCH_MATCHES_SUCCESS,
+    matches
+  };
+};
+
+const fetchMatchesFailure = (error) => {
+  return {
+    type: FETCH_MATCHES_FAILURE,
+    error
   };
 };
 
 export const fetchMatches = () => {
   return async (dispatch, getState) => {
-    dispatch(requestMatches());
+    dispatch(fetchMatchesRequest());
     const { filters } = getState();
     const url = `${config.getApiMatchesUrl()}?${stringify(filters)}`;
-    const { matches } = await goFetch(url);
-    dispatch(receiveMatches(matches));
+    const { matches } = await fetch(url)
+      .then(handleErrors)
+      .then(json => json)
+      .catch(error => dispatch(fetchMatchesFailure(error)));
+    if (matches) {
+      dispatch(fetchMatchesSuccess(matches));
+    }
   };
 };

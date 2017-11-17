@@ -2,6 +2,7 @@ import * as selectors from './selectors';
 
 describe('Matches/selectors', () => {
   const expectedIsFetching = false;
+  const expectedHasFetchFailed = false;
   const expectedMatches = [
     {
       fakeprop: 1
@@ -18,6 +19,7 @@ describe('Matches/selectors', () => {
     filters: expectedFilters,
     matches: {
       isFetching: expectedIsFetching,
+      hasFetchFailed: expectedHasFetchFailed,
       items: expectedMatches
     }
   };
@@ -26,6 +28,12 @@ describe('Matches/selectors', () => {
     const isFetching = selectors.getIsFetching(state);
 
     expect(isFetching).toEqual(expectedIsFetching);
+  });
+
+  it('should get the hasFetchFailed flag', () => {
+    const hasFetchFailed = selectors.getHasFetchFailed(state);
+
+    expect(hasFetchFailed).toEqual(expectedHasFetchFailed);
   });
 
   it('should select the matches', () => {

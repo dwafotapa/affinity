@@ -1,25 +1,34 @@
 import {
-  REQUEST_MATCHES,
-  RECEIVE_MATCHES,
+  FETCH_MATCHES_REQUEST,
+  FETCH_MATCHES_SUCCESS,
+  FETCH_MATCHES_FAILURE
 } from './actions';
 
 const initialState = {
   isFetching: false,
+  hasFetchFailed: false,
   items: []
 };
 
 const matches = (state = initialState, action) => {
   switch (action.type) {
-    case REQUEST_MATCHES:
+    case FETCH_MATCHES_REQUEST:
       return {
         ...state,
         isFetching: true
       };
-    case RECEIVE_MATCHES:
+    case FETCH_MATCHES_SUCCESS:
       return {
         ...state,
         isFetching: false,
-        items: action.items
+        hasFetchFailed: false,
+        items: action.matches
+      };
+    case FETCH_MATCHES_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        hasFetchFailed: true
       };
     default:
       return state;
