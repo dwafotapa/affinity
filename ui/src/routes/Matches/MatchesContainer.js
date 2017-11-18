@@ -1,7 +1,12 @@
 import { connect } from 'react-redux';
 import Matches from './Matches';
 import { fetchMatches } from './actions';
-import { getIsFetching, getHasFetchFailed, getFilters, getMatches } from './selectors';
+import {
+  getIsFetching,
+  getHasFetchFailed,
+  getFilters,
+  getMatches
+} from './selectors';
 
 const mapStateToProps = (state) => ({
   isFetching: getIsFetching(state),

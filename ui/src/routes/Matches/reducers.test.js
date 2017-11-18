@@ -1,5 +1,9 @@
 import matches from './reducers.js';
-import { REQUEST_MATCHES, RECEIVE_MATCHES } from './actions';
+import {
+  FETCH_MATCHES_REQUEST,
+  FETCH_MATCHES_SUCCESS,
+  FETCH_MATCHES_FAILURE
+} from './actions';
 
 describe('Matches/reducers.js', () => {
   it('returns state if action is unknown', () => {

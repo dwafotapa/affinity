@@ -1,7 +1,7 @@
 import { stringify } from 'qs';
+import 'whatwg-fetch';
 import config from '../../config';
 import { handleErrors } from '../../utils/fetch';
-
 export const FETCH_MATCHES_REQUEST = 'FETCH_MATCHES_REQUEST';
 export const FETCH_MATCHES_SUCCESS = 'FETCH_MATCHES_SUCCESS';
 export const FETCH_MATCHES_FAILURE = 'FETCH_MATCHES_FAILURE';
@@ -30,13 +30,14 @@ export const fetchMatches = () => {
   return async (dispatch, getState) => {
     dispatch(fetchMatchesRequest());
     const { filters } = getState();
-    const url = `${config.getApiMatchesUrl()}?${stringify(filters)}`;
-    const { matches } = await fetch(url)
-      .then(handleErrors)
-      .then(json => json)
-      .catch(error => dispatch(fetchMatchesFailure(error)));
-    if (matches) {
+    const url = filters
+      ? `${config.getApiMatchesUrl()}?${stringify(filters)}`
+      : config.getApiMatchesUrl();
+    try {
+      const { matches } = await fetch(url).then(handleErrors);
       dispatch(fetchMatchesSuccess(matches));
+    } catch (e) {
+      dispatch(fetchMatchesFailure(e));
     }
   };
 };
