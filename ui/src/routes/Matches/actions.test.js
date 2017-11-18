@@ -16,7 +16,7 @@ describe('Matches/actions', () => {
   it('should create a FETCH_MATCHES_REQUEST action, then a FETCH_MATCHES_FAILURE action if the request fails', () => {
     const expectedActions = [
       { type: actions.FETCH_MATCHES_REQUEST },
-      { type: actions.FETCH_MATCHES_FAILURE, error: new TypeError('Network request failed') }
+      { type: actions.FETCH_MATCHES_FAILURE, ex: new TypeError('Network request failed') }
     ];
     const store = mockStore({ matches: [] });
 

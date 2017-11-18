@@ -19,25 +19,23 @@ const fetchMatchesSuccess = (matches) => {
   };
 };
 
-const fetchMatchesFailure = (error) => {
+const fetchMatchesFailure = (ex) => {
   return {
     type: FETCH_MATCHES_FAILURE,
-    error
+    ex
   };
 };
 
 export const fetchMatches = () => {
-  return async (dispatch, getState) => {
+  return (dispatch, getState) => {
     dispatch(fetchMatchesRequest());
     const { filters } = getState();
     const url = filters
       ? `${config.getApiMatchesUrl()}?${stringify(filters)}`
       : config.getApiMatchesUrl();
-    try {
-      const { matches } = await fetch(url).then(handleErrors);
-      dispatch(fetchMatchesSuccess(matches));
-    } catch (e) {
-      dispatch(fetchMatchesFailure(e));
-    }
+    return fetch(url)
+      .then(handleErrors)
+      .then(json => dispatch(fetchMatchesSuccess(json.matches)))
+      .catch(ex => dispatch(fetchMatchesFailure(ex)));
   };
 };

@@ -17,18 +17,18 @@ const matches = (state = initialState, action) => {
         ...state,
         isFetching: true
       };
+    case FETCH_MATCHES_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        hasFetchFailed: true
+      };
     case FETCH_MATCHES_SUCCESS:
       return {
         ...state,
         isFetching: false,
         hasFetchFailed: false,
         items: action.matches
-      };
-    case FETCH_MATCHES_FAILURE:
-      return {
-        ...state,
-        isFetching: false,
-        hasFetchFailed: true
       };
     default:
       return state;

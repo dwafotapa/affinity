@@ -101,6 +101,7 @@
     "extends": "react-app"
   },
   "devDependencies": {
+    "deep-freeze": "^0.0.1",
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.2",
     "expect": "^21.2.1",

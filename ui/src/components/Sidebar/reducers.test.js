@@ -1,90 +1,80 @@
+import deepFreeze from 'deep-freeze';
 import reducer, { getDefaultFilters } from './reducers';
 import * as actions from './actions';
 
 describe('Sidebar/reducers', () => {
-  it('should return the initial state', () => {
-    const expectedState = getDefaultFilters();
+  const initialState = getDefaultFilters();
+  deepFreeze(initialState);
 
-    const nextState = reducer(getDefaultFilters(), {});
+  it('should return the initial state by default', () => {
+    const expectedState = { ...initialState };
+
+    const nextState = reducer(initialState, { type: 'DEFAULT'});
 
     expect(nextState).toEqual(expectedState);
   });
 
-  it('should handle SET_FILTER', () => {
+  it('should handle SET_FILTER to add a new filter', () => {
     const action = {
       type: actions.SET_FILTER,
       filter: 'hasPhoto',
       value: true
     };
-    const expectedState = { hasPhoto: true };
+    const expectedState = {
+      ...initialState,
+      hasPhoto: true
+    };
 
-    const nextState = reducer({}, action);
+    const nextState = reducer(initialState, action);
 
     expect(nextState).toEqual(expectedState);
   });
 
-  it('should handle SET_FILTER', () => {
+  it('should handle SET_FILTER to edit a filter', () => {
     const action = {
       type: actions.SET_FILTER,
-      filter: 'isFavourite',
-      value: true
+      filter: 'compatibilityScoreMin',
+      value: 0.50
     };
     const expectedState = {
-      hasPhoto: true,
-      isFavourite: true
+      ...initialState,
+      compatibilityScoreMin: 0.5
     };
 
-    const nextState = reducer({ hasPhoto: true }, action);
+    const nextState = reducer(initialState, action);
 
     expect(nextState).toEqual(expectedState);
   });
 
-
-  it('should handle REMOVE_FILTER', () => {
+  it('should handle REMOVE_FILTER with a non-existing filter', () => {
     const action = {
       type: actions.REMOVE_FILTER,
-      filter: 'hasPhoto'
+      filter: 'nonExistingFilter'
     };
-
-    const nextState = reducer({ hasPhoto: true }, action);
-
-    expect(nextState).toEqual({});
-  });
-
-  it('should handle REMOVE_FILTER', () => {
-    const action = {
-      type: actions.REMOVE_FILTER,
-      filter: 'isFavourite'
-    };
-    const state = {
-      hasPhoto: true,
-      isFavourite: true
-    };
-    const expectedState = { hasPhoto: true };
-
-    const nextState = reducer(state, action);
+    const expectedState = { ... initialState };
     
+    const nextState = reducer(initialState, action);
+
+    expect(nextState).toEqual(expectedState);
+  });
+
+  it('should handle REMOVE_FILTER with an existing filter', () => {
+    const action = {
+      type: actions.REMOVE_FILTER,
+      filter: 'compatibilityScoreMin'
+    };
+    const { compatibilityScoreMin, ...expectedState } = initialState;
+
+    const nextState = reducer(initialState, action);
+
     expect(nextState).toEqual(expectedState);
   });
 
   it('should handle RESET_FILTERS', () => {
     const action = { type: actions.RESET_FILTERS };
-    const expectedState = getDefaultFilters();
+    const expectedState = { ... initialState };
 
-    const nextState = reducer({}, action)
-
-    expect(nextState).toEqual(expectedState);
-  });
-
-  it('should handle RESET_FILTERS', () => {
-    const action = { type: actions.RESET_FILTERS };
-    const state = {
-      hasPhoto: true,
-      compatibilityScoreMin: 0.56
-    }
-    const expectedState = getDefaultFilters();
-
-    const nextState = reducer(state, action)
+    const nextState = reducer(initialState, action)
 
     expect(nextState).toEqual(expectedState);
   });
