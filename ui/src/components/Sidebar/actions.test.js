@@ -1,7 +1,7 @@
 import * as actions from './actions';
 
 describe('Sidebar/actions', () => {
-  it('should create a SET_FILTER action to add or update a filter', () => {
+  it('should create a SET_FILTER action', () => {
     const filter = 'hasPhoto';
     const value = true;
     const expectedAction = {
@@ -15,7 +15,7 @@ describe('Sidebar/actions', () => {
     expect(action).toEqual(expectedAction);
   });
 
-  it('should create a REMOVE_FILTER action to remove a filter', () => {
+  it('should create a REMOVE_FILTER action', () => {
     const filter = 'hasPhoto';
     const expectedAction = {
       type: actions.REMOVE_FILTER,
@@ -27,7 +27,7 @@ describe('Sidebar/actions', () => {
     expect(action).toEqual(expectedAction);
   });
 
-  it('should create a RESET_FILTERS action to reset to default filters', () => {
+  it('should create a RESET_FILTERS action', () => {
     const expectedAction = {
       type: actions.RESET_FILTERS
     };

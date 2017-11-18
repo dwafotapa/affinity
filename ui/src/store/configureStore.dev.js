@@ -11,9 +11,9 @@ const rootReducer = combineReducers({
 });
 
 const enhancer = composeWithDevTools(
-  applyMiddleware(createLogger(), thunk)
+  applyMiddleware(thunk, createLogger())
 );
 
-export default function configureStore(initialState) {  
-  return createStore(rootReducer, initialState, enhancer);
+export default function configureStore(preloadedState) {  
+  return createStore(rootReducer, preloadedState, enhancer);
 }
