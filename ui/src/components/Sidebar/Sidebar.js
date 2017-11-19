@@ -101,7 +101,6 @@ class Sidebar extends Component {
             <div className={styles.SidebarBody}>
               <div className={styles.SidebarRow}>
                 <input
-                  id="hasPhoto"
                   name="hasPhoto"
                   type="checkbox"
                   checked={this.props.filters.hasPhoto || false}
@@ -112,7 +111,6 @@ class Sidebar extends Component {
               </div>
               <div className={styles.SidebarRow}>
                 <input
-                  id="hasExchanged"
                   name="hasExchanged"
                   type="checkbox"
                   checked={this.props.filters.hasExchanged || false}
@@ -123,7 +121,6 @@ class Sidebar extends Component {
               </div>
               <div className={styles.SidebarRow}>
                 <input
-                  id="isFavourite"
                   name="isFavourite"
                   type="checkbox"
                   checked={this.props.filters.isFavourite || false}
@@ -136,6 +133,7 @@ class Sidebar extends Component {
                 <label>Compatibility Score</label>
                 <div className={styles.SidebarInputRange}>
                   <InputRange
+                    name="compatibilityScore"
                     formatLabel={value => formatCompatibilityScoreLabel(value)}
                     minValue={config.COMPATIBILITY_SCORE_MIN}
                     maxValue={config.COMPATIBILITY_SCORE_MAX}
@@ -153,6 +151,7 @@ class Sidebar extends Component {
                 <label>Age</label>
                 <div className={styles.SidebarInputRange}>
                   <InputRange
+                    name="age"
                     formatLabel={value => formatAgeLabel(value)}
                     minValue={config.AGE_MIN}
                     maxValue={config.AGE_MAX}
@@ -169,6 +168,7 @@ class Sidebar extends Component {
                 <label>Height (in cm)</label>
                 <div className={styles.SidebarInputRange}>
                   <InputRange
+                    name="height"
                     formatLabel={value => formatHeightLabel(value)}
                     minValue={config.HEIGHT_MIN}
                     maxValue={config.HEIGHT_MAX}
@@ -185,6 +185,7 @@ class Sidebar extends Component {
                 <label>Distance (in km)</label>
                 <div className={styles.SidebarInputRange}>
                   <InputRange
+                    name="distance"
                     formatLabel={value => formatDistanceLabel(value)}
                     minValue={config.DISTANCE_MIN}
                     maxValue={config.DISTANCE_MAX}

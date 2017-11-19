@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { Matches } from './Matches';
 import SidebarContainer from '../../components/Sidebar/SidebarContainer';
 import Main from '../../components/Main/Main';
@@ -23,10 +23,35 @@ const setup = () => {
 };
 
 describe('<Matches/>', () => {
-  it('renders a <SidebarContainer/> and a <Main/>', () => {
-    const { wrapper } = setup();
+  describe('render() / componentDidMount()', () => {
+    it('should render a <SidebarContainer/> and a <Main/> and call fetchMatches', () => {
+      const { props, wrapper } = setup();
 
-    expect(wrapper.find(SidebarContainer)).toHaveLength(1);
-    expect(wrapper.find(Main)).toHaveLength(1);
+      expect(wrapper.find(SidebarContainer)).toHaveLength(1);
+      expect(wrapper.find(Main)).toHaveLength(1);
+      expect(props.fetchMatches.mock.calls.length).toBe(1);
+    });
+  });
+
+  describe('componentWillReceiveProps()', () => {
+    it('should not call fetchMatches if the filters don\'t change', () => {
+      const {props, wrapper } = setup();
+      
+      expect(props.fetchMatches.mock.calls.length).toBe(1);
+      
+      wrapper.setProps({ filters: props.filters });
+      
+      expect(props.fetchMatches.mock.calls.length).toBe(1);
+    });
+
+    it('should call fetchMatches if the filters change', () => {
+      const {props, wrapper } = setup();
+
+      expect(props.fetchMatches.mock.calls.length).toBe(1);
+      
+      wrapper.setProps({ filters: { hasPhoto: true } });
+      
+      expect(props.fetchMatches.mock.calls.length).toBe(2);
+    });
   });
 });
