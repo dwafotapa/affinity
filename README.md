@@ -1,5 +1,5 @@
 # Affinity
-Affinity is a dating app built with React and Node.js that enables you to filter your matches.
+Affinity is a dating app built with React, Redux and Node.js that enables you to filter your matches.
 
 ## Getting Started
 
@@ -54,13 +54,13 @@ My preferred choice for creating a RESTful API was Node.js with Express, Mocha a
 
 ### Client side
 
-I have used create-react-app and ejected from the default configuration to bootstrap the UI. React with Jest, Enzyme, Webpack, Sass and CSS-modules are the toolchain I've chosen to build the frontend. Webpack's hot reloading was a blessing when working on the frontend bits and I have liked the simplicity of CSS-modules and the object-oriented structure of Sass. I have built my app using pure functions with immutable JavaScript to have more robust code and prevent side effects. Also I have tried not to use too many npm packages to show my knowledge of ES6 (no lodash for example).
+I have used create-react-app and ejected from the default configuration to bootstrap the UI. React with Jest, Enzyme, Redux, Webpack, Sass and CSS-modules are the toolchain I've chosen to build the frontend. Webpack's hot reloading was a blessing when working on the frontend bits and I have liked the simplicity of CSS-modules and the object-oriented structure of Sass. I have built my app using pure functions with immutable JavaScript to have more robust code and prevent side effects. Also I have tried not to use too many npm packages to show my knowledge of ES6 (no lodash for example).
 
 ## Difficulties
 
-The difficulties I have encountered were mainly on the frontend with setup up the tests and some of the technologies I had never used before. Unfortunately I didn't apply TDD on the client side as I was discovering lots of new tools like Redux, React-Router, CSS modules or Sass and all my efforts were focused on making them all work together. In the end, I have managed to write some good tests for action creators, reducers, selectors and presentational components.
+The difficulties I have encountered were mainly on the frontend with setup up the tests and some of the technologies I had never used before. Unfortunately I didn't apply TDD on the client side as I was discovering lots of new tools like React-Router, CSS modules or Sass and all my efforts were focused on making them all work together. In the end, I have managed to write some good tests for action creators, reducers, selectors and presentational components.
 
-Implementing the reusable Slider event handlers was a challenge as some of the Sliders have one or two handles and some of the Sliders have open bounds or don't. I used this React component [https://github.com/davidchin/react-input-range](https://github.com/davidchin/react-input-range) and found a bug because my Slider component was making multiple ajax requests when I drag-and-dropped it. The fix was to read the docs (rtfm...), discover there was OnChange and OnChangeComplete callbacks and use the local state to store the values of the changing filters with OnChange. Then on releasing the handle with OnChangeComplete, I compare it to the redux state and trigger an ajax request if they are different.
+Implementing the reusable Slider event handlers was a challenge as some of the Sliders have one or two handles and some of the Sliders have open bounds or don't. I used this React component [https://github.com/davidchin/react-input-range](https://github.com/davidchin/react-input-range) and found a bug because my Slider component was making multiple ajax requests when I drag-and-dropped it. The fix was to read the docs (rtfm...), discover there was OnChange and OnChangeComplete callbacks and use the component's local state to store the values of the changing filters with OnChange. Then on releasing the handle with OnChangeComplete, I compare it to the redux state and trigger an ajax request if they are different.
 
 ## Improvements
 
