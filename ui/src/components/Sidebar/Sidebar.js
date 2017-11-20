@@ -101,6 +101,7 @@ class Sidebar extends Component {
             <div className={styles.SidebarBody}>
               <div className={styles.SidebarRow}>
                 <input
+                  id="hasPhoto"
                   name="hasPhoto"
                   type="checkbox"
                   checked={this.props.filters.hasPhoto || false}
@@ -111,6 +112,7 @@ class Sidebar extends Component {
               </div>
               <div className={styles.SidebarRow}>
                 <input
+                  id="hasExchanged"
                   name="hasExchanged"
                   type="checkbox"
                   checked={this.props.filters.hasExchanged || false}
@@ -121,6 +123,7 @@ class Sidebar extends Component {
               </div>
               <div className={styles.SidebarRow}>
                 <input
+                  id="isFavourite"
                   name="isFavourite"
                   type="checkbox"
                   checked={this.props.filters.isFavourite || false}
