@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Matches } from './Matches';
+import { MatchList } from './MatchList';
 import SidebarContainer from '../../components/Sidebar/SidebarContainer';
 import Main from '../../components/Main/Main';
 import { getDefaultFilters } from '../../components/Sidebar/reducers';
@@ -14,7 +14,7 @@ const setup = () => {
     fetchMatches: jest.fn()
   };
   
-  const wrapper = shallow(<Matches {...props}/>);
+  const wrapper = shallow(<MatchList {...props}/>);
 
   return {
     props,

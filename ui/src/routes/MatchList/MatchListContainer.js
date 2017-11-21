@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Matches from './Matches';
+import MatchList from './MatchList';
 import { fetchMatches } from './actions';
 import {
   getIsFetching,
@@ -21,4 +21,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Matches);
+export default connect(mapStateToProps, mapDispatchToProps)(MatchList);

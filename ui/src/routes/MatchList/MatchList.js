@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import SidebarContainer from '../../components/Sidebar/SidebarContainer';
 import Main from '../../components/Main/Main';
-import styles from './Matches.scss';
+import styles from './MatchList.scss';
 
 const formatHeight = (height) => {
   return `${height}cm`;
@@ -12,7 +12,7 @@ const formatCompatibilityScore = (compatibilityScore) => {
   return `${compatibilityScore * 100}%`;
 }
 
-export class Matches extends Component {
+export class MatchList extends Component {
   componentDidMount() {
     this.props.fetchMatches();
   }
@@ -53,7 +53,7 @@ export class Matches extends Component {
 
   render() {
     return (
-      <div className={styles.Matches}>
+      <div className={styles.MatchList}>
         <SidebarContainer/>
         <Main
           heading="Matches"
@@ -64,7 +64,7 @@ export class Matches extends Component {
   }
 };
 
-Matches.propTypes = {
+MatchList.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   hasFetchFailed: PropTypes.bool.isRequired,
   filters: PropTypes.object.isRequired,
@@ -72,4 +72,4 @@ Matches.propTypes = {
   fetchMatches: PropTypes.func.isRequired
 };
 
-export default Matches;
+export default MatchList;
