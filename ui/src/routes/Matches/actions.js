@@ -2,6 +2,7 @@ import { stringify } from 'qs';
 import 'whatwg-fetch';
 import config from '../../config';
 import { handleErrors } from '../../utils/fetch';
+
 export const FETCH_MATCHES_REQUEST = 'FETCH_MATCHES_REQUEST';
 export const FETCH_MATCHES_SUCCESS = 'FETCH_MATCHES_SUCCESS';
 export const FETCH_MATCHES_FAILURE = 'FETCH_MATCHES_FAILURE';
