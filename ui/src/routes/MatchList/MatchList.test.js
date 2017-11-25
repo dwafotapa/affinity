@@ -22,7 +22,7 @@ const setup = () => {
   };
 };
 
-describe('<Matches/>', () => {
+describe('<MatchList/>', () => {
   describe('render() / componentDidMount()', () => {
     it('should render a <SidebarContainer/> and a <Main/> and call fetchMatches()', () => {
       const { props, wrapper } = setup();
