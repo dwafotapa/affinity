@@ -1,6 +1,6 @@
 import * as actions from './actions';
 
-describe('Sidebar/actions', () => {
+describe('actions', () => {
   it('should create a SET_FILTER action', () => {
     const filter = 'hasPhoto';
     const value = true;

@@ -2,7 +2,7 @@ import deepFreeze from 'deep-freeze';
 import reducer, { getDefaultFilters } from './reducer';
 import * as actions from './actions';
 
-describe('Sidebar/reducers', () => {
+describe('reducer', () => {
   const initialState = getDefaultFilters();
   deepFreeze(initialState);
 

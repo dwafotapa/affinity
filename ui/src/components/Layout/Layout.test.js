@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 import Layout from './Layout';
 
-describe('Layout', () => {
+describe('<Layout/>', () => {
   it('renders children when passed in', () => {
     const wrapper = shallow(
       <Layout><p className="someClass">someText</p></Layout>

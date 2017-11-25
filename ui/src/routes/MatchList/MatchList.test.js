@@ -24,7 +24,7 @@ const setup = () => {
 
 describe('<Matches/>', () => {
   describe('render() / componentDidMount()', () => {
-    it('should render a <SidebarContainer/> and a <Main/> and call fetchMatches', () => {
+    it('should render a <SidebarContainer/> and a <Main/> and call fetchMatches()', () => {
       const { props, wrapper } = setup();
 
       expect(wrapper.find(SidebarContainer)).toHaveLength(1);
@@ -34,7 +34,7 @@ describe('<Matches/>', () => {
   });
 
   describe('componentWillReceiveProps()', () => {
-    it('should not call fetchMatches if the filters don\'t change', () => {
+    it('should not call fetchMatches() if the filters don\'t change', () => {
       const {props, wrapper } = setup();
       
       expect(props.fetchMatches.mock.calls.length).toBe(1);
@@ -44,7 +44,7 @@ describe('<Matches/>', () => {
       expect(props.fetchMatches.mock.calls.length).toBe(1);
     });
 
-    it('should call fetchMatches if the filters change', () => {
+    it('should call fetchMatches() if the filters change', () => {
       const {props, wrapper } = setup();
 
       expect(props.fetchMatches.mock.calls.length).toBe(1);

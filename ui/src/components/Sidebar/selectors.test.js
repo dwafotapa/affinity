@@ -1,20 +1,19 @@
 import * as selectors from './selectors';
 
-describe('Sidebar/selectors', () => {
-  it('should select the filters', () => {
-    const state = {
-      filters: {
+describe('selectors', () => {
+  describe('getFilters()', () => {
+    it('should return the filters', () => {
+      const expectedFilters = {
         hasPhoto: true,
         isFavourite: true
-      }
-    };
-    const expectedFilters = {
-      hasPhoto: true,
-      isFavourite: true
-    };
+      };
+      const state = {
+        filters: { ...expectedFilters }
+      };
 
-    const filters = selectors.getFilters(state);
+      const filters = selectors.getFilters(state);
 
-    expect(filters).toEqual(expectedFilters);
+      expect(filters).toEqual(expectedFilters);
+    });
   });
 });

@@ -6,7 +6,7 @@ import {
   FETCH_MATCHES_FAILURE
 } from './actions';
 
-describe('Matches/reducers.js', () => {
+describe('reducer', () => {
   const initialState = {
     isFetching: false,
     hasFetchFailed: false,

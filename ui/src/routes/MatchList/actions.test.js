@@ -7,7 +7,7 @@ import * as actions from './actions';
 const middlewares = [ thunk ];
 const mockStore = configureMockStore(middlewares);
 
-describe('Matches/actions', () => {
+describe('actions', () => {
   afterEach(() => {
     fetchMock.reset();
     fetchMock.restore();

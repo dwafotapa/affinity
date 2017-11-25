@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { shallow, mount } from 'enzyme';
 import Nav from './Nav';
 
-describe('Nav', () => {
+describe('<Nav/>', () => {
   it('renders a Home <Link/> component and a Matches <Link/> component', () => {
     const wrapper = shallow(
       <Nav/>
