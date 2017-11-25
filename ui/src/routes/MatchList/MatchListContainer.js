@@ -16,8 +16,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchMatches: (filters) => {
-    dispatch(fetchMatches(filters));
+  fetchMatches: () => {
+    dispatch(fetchMatches());
   }
 });
 

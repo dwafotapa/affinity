@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import filters from '../components/Sidebar/reducers';
-import matches from '../routes/Matches/reducers';
+import filters from '../components/Sidebar/reducer';
+import matches from '../routes/Matches/reducer';
 
 const rootReducer = combineReducers({
   filters,

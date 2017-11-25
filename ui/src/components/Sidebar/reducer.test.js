@@ -1,5 +1,5 @@
 import deepFreeze from 'deep-freeze';
-import reducer, { getDefaultFilters } from './reducers';
+import reducer, { getDefaultFilters } from './reducer';
 import * as actions from './actions';
 
 describe('Sidebar/reducers', () => {

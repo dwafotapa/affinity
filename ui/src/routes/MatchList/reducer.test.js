@@ -1,5 +1,5 @@
 import deepFreeze from 'deep-freeze';
-import reducer from './reducers.js';
+import reducer from './reducer';
 import {
   FETCH_MATCHES_REQUEST,
   FETCH_MATCHES_SUCCESS,

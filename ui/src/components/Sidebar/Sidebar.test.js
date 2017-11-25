@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import InputRange from 'react-input-range';
 import Sidebar from './Sidebar';
-import { getDefaultFilters } from './reducers';
+import { getDefaultFilters } from './reducer';
 
 const setup = () => {
   const props = {
