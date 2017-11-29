@@ -70,6 +70,7 @@ describe('<Sidebar/>', () => {
   describe('handleInputRangeChange()', () => {
     it('should update the filters', () => {
       const { props, wrapper } = setup();
+      wrapper.setProps(props);
       const inputRange = wrapper.find('InputRange[name="compatibilityScore"]');
 
       expect(wrapper.state().filters.compatibilityScoreMin).toBe(0.01);
@@ -85,6 +86,7 @@ describe('<Sidebar/>', () => {
   describe('handleInputRangeChangeComplete()', () => {
     it('should not call setFilter if the filters don\'t change', () => {
       const { props, wrapper } = setup();
+      wrapper.setProps(props);
       const inputRange = wrapper.find('InputRange[name="compatibilityScore"]');
 
       inputRange.props().onChangeComplete({ min: 0.01, max: 0.99 });
@@ -94,6 +96,7 @@ describe('<Sidebar/>', () => {
 
     it('should call setFilter if the filters change', () => {
       const { props, wrapper } = setup();
+      wrapper.setProps(props);
       const inputRange = wrapper.find('InputRange[name="compatibilityScore"]');
 
       expect(props.setFilter.mock.calls.length).toBe(0);

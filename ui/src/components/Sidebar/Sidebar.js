@@ -29,7 +29,7 @@ class Sidebar extends Component {
     super(props);
     this.state = {
       isCollapsed: false,
-      filters: props.filters // local state for dragging and updating the sliders
+      filters: {} // local state for dragging and updating the sliders
     };
   }
 
