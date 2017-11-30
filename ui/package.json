@@ -105,7 +105,6 @@
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.2",
     "expect": "^21.2.1",
-    "fetch-mock": "^5.13.1",
     "node-sass": "^4.5.3",
     "react-test-renderer": "^16.0.0",
     "redux-devtools": "^3.4.0",

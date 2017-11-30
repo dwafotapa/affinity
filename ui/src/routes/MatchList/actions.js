@@ -7,16 +7,16 @@ export const FETCH_MATCHES_REQUEST = 'FETCH_MATCHES_REQUEST';
 export const FETCH_MATCHES_SUCCESS = 'FETCH_MATCHES_SUCCESS';
 export const FETCH_MATCHES_FAILURE = 'FETCH_MATCHES_FAILURE';
 
-const fetchMatchesRequest = () => ({
+export const fetchMatchesRequest = () => ({
   type: FETCH_MATCHES_REQUEST
 });
 
-const fetchMatchesSuccess = (matches) => ({
+export const fetchMatchesSuccess = (matches) => ({
   type: FETCH_MATCHES_SUCCESS,
   matches
 });
 
-const fetchMatchesFailure = (ex) => ({
+export const fetchMatchesFailure = (ex) => ({
   type: FETCH_MATCHES_FAILURE,
   ex
 });

@@ -41,7 +41,7 @@ yarn start
 
 Then open [http://localhost:3000/](http://localhost:3000/) to see your app.
 
-To run the tests (make sure the server is off first): 
+To run the tests: 
 ```sh
 yarn test
 ```
