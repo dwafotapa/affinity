@@ -1,11 +1,10 @@
 import React from 'react';
 import styles from './Main.scss';
 
-const Main = (props) => (
+const Main = ({ children }) => (
   <div className={styles.MainWrapper}>
     <div className={styles.Main}>
-      <div className={styles.MainHeading}>{props.heading}</div>
-      <div className={styles.MainBody}>{props.body}</div>
+      {children}
     </div>
   </div>
 );

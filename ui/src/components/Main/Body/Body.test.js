@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Layout from './Layout';
+import Body from './Body';
 
-describe('<Layout/>', () => {
+describe('<Body/>', () => {
   it('should render children when passed in', () => {
     const wrapper = shallow(
-      <Layout><p className="someClass">someText</p></Layout>
+      <Body><p className="someClass">someText</p></Body>
     );
 
     expect(wrapper.contains(<p className="someClass">someText</p>)).toBe(true);

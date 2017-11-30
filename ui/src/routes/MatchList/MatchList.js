@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import SidebarContainer from '../../components/Sidebar/SidebarContainer';
 import Main from '../../components/Main/Main';
+import Heading from '../../components/Main/Heading/Heading';
+import Body from '../../components/Main/Body/Body';
 import Match from './Match/Match';
 import styles from './MatchList.scss';
 
@@ -42,10 +44,10 @@ export class MatchList extends Component {
     return (
       <div className={styles.MatchList}>
         <SidebarContainer/>
-        <Main
-          heading="Matches"
-          body={this.renderMatches()}
-        />
+        <Main>
+          <Heading>Matches</Heading>
+          <Body>{this.renderMatches()}</Body>
+        </Main>
       </div>
     );
   }
