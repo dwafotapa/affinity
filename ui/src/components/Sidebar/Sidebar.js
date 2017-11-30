@@ -29,12 +29,14 @@ class Sidebar extends Component {
     super(props);
     this.state = {
       isCollapsed: false,
-      filters: {} // local state for dragging and updating the sliders
+      filters: props.filters // local state for dragging and updating the sliders
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ filters: nextProps.filters });
+    if (nextProps.filters !== this.state.filters) {
+      this.setState({ filters: nextProps.filters });
+    }
   }
 
   handleToggleLinkClick = (e) => {

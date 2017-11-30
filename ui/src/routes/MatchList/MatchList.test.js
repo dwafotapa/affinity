@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { MatchList } from './MatchList';
+import MatchList from './MatchList';
 import SidebarContainer from '../../components/Sidebar/SidebarContainer';
 import Main from '../../components/Main/Main';
 import { getDefaultFilters } from '../../components/Sidebar/reducer';

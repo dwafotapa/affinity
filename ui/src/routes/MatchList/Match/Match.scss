@@ -1,0 +1,24 @@
+@import '../../../globals.scss';
+
+.Match {
+  display: flex;
+  padding-bottom: 10px;
+
+  @media #{$small-and-down} {
+    display: block;
+  }
+
+  .MatchPhoto {
+    width: 200px;
+
+    @media #{$small-and-down} {
+      width: 100%;
+    }
+  }
+
+  .MatchDetails {
+    div {
+      padding: 5px 0 5px 10px;
+    }
+  }
+}
