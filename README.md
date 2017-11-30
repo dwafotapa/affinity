@@ -50,20 +50,21 @@ yarn test
 
 ### Server side
 
-Mocha 
-Chai 
-Node.js 
-Express 
+Mocha
+
+Chai
+Node.js
+Express
 
 ### Client side
 
-Jest 
-Enzyme 
-React 
-Redux 
-Sass 
-CSS Modules 
-Webpack 
+Jest
+Enzyme
+React
+Redux
+Sass
+CSS Modules
+Webpack
 
 ## Credits
 
